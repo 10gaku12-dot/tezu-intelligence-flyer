@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>TEZUIntelligence｜A4チラシ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+
+    /* ══════════════════════════════
+       印刷設定
+    ══════════════════════════════ */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+    @media print {
+      html, body { width: 210mm; height: 297mm; margin: 0; }
+      .no-print { display: none !important; }
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold:      #d6a451;
+      --gold-lt:   #f0c46a;
+      --black:     #111111;
+      --offwhite:  #faf8f4;
+      --lightbg:   #f3ede2;
+      --gray:      #666666;
+      --lgray:     #999999;
+    }
+
+    html {
+      background: #d0cfc9; /* 印刷プレビュー時の背景 */
+    }
+    body {
+      width: 210mm;
+      margin: 0 auto;
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    }
+
+    /* ══════════════════════════════
+       チラシ本体
+    ══════════════════════════════ */
+    .flyer {
+      width: 210mm;
+      height: 297mm;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── 上部ゴールドライン ── */
+    .top-accent {
+      background: var(--gold);
+      height: 5px;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════
+       ① ヒーロー（黒背景キャッチ）
+    ══════════════════════════════ */
+    .hero {
+      background: var(--black);
+      color: #fff;
+      text-align: center;
+      padding: 20px 18mm 22px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    /* 下向き三角 */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 24px solid transparent;
+      border-right: 24px solid transparent;
+      border-top: 17px solid var(--black);
+      z-index: 3;
+    }
+    .hero-eyebrow {
+      font-size: 8.5px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .hero-main {
+      font-size: 27px;
+      font-weight: 900;
+      line-height: 1.28;
+      letter-spacing: -0.3px;
+    }
+    .hero-main .accent { color: var(--gold); }
+    .hero-main .ul {
+      display: inline;
+      border-bottom: 3px solid var(--gold);
+      padding-bottom: 1px;
+    }
+    .hero-sub {
+      font-size: 10.5px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 11px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ══════════════════════════════
+       ② 悩みパート
+    ══════════════════════════════ */
+    .pain-wrap {
+      padding: 26px 14mm 14px;
+      flex-shrink: 0;
+    }
+    .sec-label {
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 9px;
+    }
+    .pain-row {
+      display: flex;
+      gap: 7px;
+    }
+    .pain-card {
+      flex: 1;
+      background: var(--lightbg);
+      border-top: 3px solid var(--gold);
+      border-radius: 0 0 7px 7px;
+      padding: 10px 10px 9px;
+    }
+    .pain-icon  { font-size: 19px; display: block; margin-bottom: 5px; }
+    .pain-title { font-size: 11.5px; font-weight: 900; line-height: 1.35; color: var(--black); }
+    .pain-note  { font-size: 9px;  color: var(--gray); margin-top: 3px; line-height: 1.35; }
+
+    /* ── 矢印帯 ── */
+    .arrow-band {
+      text-align: center;
+      padding: 5px 0;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════
+       ③ 解決パート
+    ══════════════════════════════ */
+    .solution-wrap {
+      padding: 4px 14mm 14px;
+      flex-shrink: 0;
+    }
+    .solution-row {
+      display: flex;
+      gap: 7px;
+    }
+    .solution-card {
+      flex: 1;
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+      padding: 10px 8px 9px;
+      text-align: center;
+      background: var(--offwhite);
+    }
+    .sol-icon  { font-size: 21px; display: block; margin-bottom: 4px; }
+    .sol-title { font-size: 11px; font-weight: 900; color: var(--black); margin-bottom: 2px; }
+    .sol-desc  { font-size: 8.5px; color: var(--gray); line-height: 1.35; }
+
+    /* ══════════════════════════════
+       ④ ベネフィット帯
+    ══════════════════════════════ */
+    .benefit {
+      background: var(--gold);
+      padding: 12px 14mm;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .benefit-main {
+      font-size: 15.5px;
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1.4;
+    }
+    .benefit-main .wh { color: #fff; }
+    .benefit-sub {
+      font-size: 9.5px;
+      color: rgba(0,0,0,0.55);
+      margin-top: 3px;
+    }
+
+    /* ══════════════════════════════
+       ⑤ QRコードメインエリア
+    ══════════════════════════════ */
+    .qr-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14mm 6px;
+      background: var(--offwhite);
+    }
+    .qr-lead {
+      font-size: 10.5px;
+      color: var(--gray);
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+    .qr-headline {
+      font-size: 23px;
+      font-weight: 900;
+      color: var(--black);
+      text-align: center;
+      line-height: 1.25;
+      margin-bottom: 13px;
+    }
+    .qr-headline .accent {
+      color: var(--gold);
+      border-bottom: 3px solid var(--gold);
+    }
+    /* 矢印 */
+    .qr-arrow {
+      font-size: 30px;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    /* QR外枠 */
+    .qr-outer {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .qr-box {
+      border: 5px solid var(--gold);
+      border-radius: 14px;
+      padding: 10px;
+      background: #fff;
+      box-shadow:
+        0 0 0 1px rgba(214,164,81,0.2),
+        0 10px 36px rgba(214,164,81,0.22),
+        0 2px 8px rgba(0,0,0,0.08);
+      display: inline-block;
+    }
+    .qr-box img {
+      width: 155px;
+      height: 155px;
+      display: block;
+      border-radius: 6px;
+    }
+    /* コーナーマーカー */
+    .qr-c {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--black);
+      border-style: solid;
+    }
+    .qr-c.tl { top: -3px; left: -3px;   border-width: 3px 0 0 3px; }
+    .qr-c.tr { top: -3px; right: -3px;  border-width: 3px 3px 0 0; }
+    .qr-c.bl { bottom: -3px; left: -3px;  border-width: 0 0 3px 3px; }
+    .qr-c.br { bottom: -3px; right: -3px; border-width: 0 3px 3px 0; }
+
+    /* CTAボタン風テキスト */
+    .qr-cta-text {
+      background: var(--black);
+      color: #fff;
+      font-size: 11.5px;
+      font-weight: 900;
+      padding: 9px 28px;
+      border-radius: 30px;
+      letter-spacing: 0.5px;
+    }
+    .qr-cta-text .gold { color: var(--gold); }
+    .qr-url {
+      font-size: 8.5px;
+      color: #bbb;
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ══════════════════════════════
+       ⑥ フッター
+    ══════════════════════════════ */
+    .footer {
+      background: var(--black);
+      padding: 10px 14mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .co-name {
+      font-size: 15px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .co-name span { color: var(--gold); }
+    .co-tag {
+      font-size: 8px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+    .free-badge {
+      background: var(--gold);
+      color: var(--black);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 7px 18px;
+      border-radius: 22px;
+      letter-spacing: 0.5px;
+    }
+    .free-tag {
+      font-size: 8px;
+      color: rgba(255,255,255,0.4);
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    /* ── 下部ゴールドライン ── */
+    .bottom-accent {
+      background: var(--gold);
+      height: 4px;
+      flex-shrink: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="flyer">
+
+  <!-- 上部ゴールドライン -->
+  <div class="top-accent"></div>
+
+  <!-- ① ヒーロー：キャッチコピー -->
+  <div class="hero">
+    <div class="hero-eyebrow">FOR BUSINESS OWNERS ／ AI CONSULTING</div>
+    <h1 class="hero-main">
+      その作業、本当に<br>
+      <span class="ul accent">あなたがやる必要</span><br>
+      ありますか？
+    </h1>
+    <p class="hero-sub">経営者の時間は、売上を生む仕事に使ってください。</p>
+  </div>
+
+  <!-- ② 悩みパート -->
+  <div class="pain-wrap">
+    <div class="sec-label">▸ こんな悩みありませんか？</div>
+    <div class="pain-row">
+      <div class="pain-card">
+        <span class="pain-icon">⏱</span>
+        <div class="pain-title">作業に追われて<br>時間がない</div>
+        <div class="pain-note">書類・メール・<br>報告書が山積み</div>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">👥</span>
+        <div class="pain-title">人手が足りない・<br>採用できない</div>
+        <div class="pain-note">人件費は上がるのに<br>生産性が上がらない</div>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">📉</span>
+        <div class="pain-title">集客が不安定で<br>売上が読めない</div>
+        <div class="pain-note">SNS・広告に<br>手が全く回らない</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 矢印帯 -->
+  <div class="arrow-band">↓ &nbsp; AIで、すべて解決できます &nbsp; ↓</div>
+
+  <!-- ③ 解決パート -->
+  <div class="solution-wrap">
+    <div class="solution-row">
+      <div class="solution-card">
+        <span class="sol-icon">🤖</span>
+        <div class="sol-title">業務を自動化</div>
+        <div class="sol-desc">書類・メール・日報を<br>AIが自動で作成</div>
+      </div>
+      <div class="solution-card">
+        <span class="sol-icon">📢</span>
+        <div class="sol-title">集客を仕組み化</div>
+        <div class="sol-desc">SNS・クチコミ返信を<br>AIが代わりに作成</div>
+      </div>
+      <div class="solution-card">
+        <span class="sol-icon">💰</span>
+        <div class="sol-title">コストを削減</div>
+        <div class="sol-desc">月20〜40時間分の<br>工数を削減できる</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ④ ベネフィット帯 -->
+  <div class="benefit">
+    <div class="benefit-main">
+      時間が増える ＝ <span class="wh">売上を作る時間が増える</span>
+    </div>
+    <div class="benefit-sub">「もっと早く始めればよかった」――多くの経営者の声です</div>
+  </div>
+
+  <!-- ⑤ QRコード：メインCTA -->
+  <div class="qr-area">
+    <div class="qr-lead">▸ あなたの業務、どこからAIに任せられる？</div>
+    <div class="qr-headline">
+      スマホで <span class="accent">3分</span>、無料で診断
+    </div>
+    <div class="qr-arrow">↓</div>
+    <div class="qr-outer">
+      <div class="qr-box">
+        <!-- QRコード画像（同フォルダの qr.jpg） -->
+        <img src="qr.jpg" alt="QRコード｜TEZUIntelligence">
+      </div>
+      <div class="qr-c tl"></div>
+      <div class="qr-c tr"></div>
+      <div class="qr-c bl"></div>
+      <div class="qr-c br"></div>
+    </div>
+    <div class="qr-cta-text">👆 読み取って <span class="gold">今すぐ無料診断</span> を試す</div>
+    <div class="qr-url">https://tezu-intelligence-hp.vercel.app/</div>
+  </div>
+
+  <!-- ⑥ フッター -->
+  <div class="footer">
+    <div>
+      <div class="co-name">TEZU<span>Intelligence</span></div>
+      <div class="co-tag">AI Strategy Consultant ／ 中小企業向けAI導入支援専門</div>
+    </div>
+    <div>
+      <div class="free-badge">初回相談 無料</div>
+      <div class="free-tag">LINE または HP からご予約ください</div>
+    </div>
+  </div>
+
+  <!-- 下部ゴールドライン -->
+  <div class="bottom-accent"></div>
+
+</div>
+
+</body>
+</html>
