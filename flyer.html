@@ -1,447 +1,368 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>TEZUIntelligence｜A4チラシ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8">
+<title>TEZUIntelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&family=Inter:wght@700;900&display=swap" rel="stylesheet">
+<style>
 
-    /* ══════════════════════════════
-       印刷設定
-    ══════════════════════════════ */
-    @page {
-      size: A4 portrait;
-      margin: 0;
-    }
-    @media print {
-      html, body { width: 210mm; height: 297mm; margin: 0; }
-      .no-print { display: none !important; }
-    }
+/* ══ 印刷設定 ══════════════════════════════════ */
+@page { size: A4 portrait; margin: 0; }
+@media print {
+  html, body { width: 210mm; height: 297mm; background: none; }
+  .flyer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
 
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    :root {
-      --gold:      #d6a451;
-      --gold-lt:   #f0c46a;
-      --black:     #111111;
-      --offwhite:  #faf8f4;
-      --lightbg:   #f3ede2;
-      --gray:      #666666;
-      --lgray:     #999999;
-    }
+:root {
+  --g:  #d6a451;   /* ゴールド */
+  --g2: #f0c46a;   /* ゴールドライト */
+  --bk: #0c0c0c;   /* 黒 */
+}
 
-    html {
-      background: #d0cfc9; /* 印刷プレビュー時の背景 */
-    }
-    body {
-      width: 210mm;
-      margin: 0 auto;
-      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-    }
+html { background: #3a3a3a; }
+body {
+  width: 210mm;
+  margin: 0 auto;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+}
 
-    /* ══════════════════════════════
-       チラシ本体
-    ══════════════════════════════ */
-    .flyer {
-      width: 210mm;
-      height: 297mm;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
+/* ══ チラシ本体 ════════════════════════════════ */
+.flyer {
+  width: 210mm;
+  height: 297mm;
+  background: var(--bk);
+  position: relative;
+  overflow: hidden;
+}
 
-    /* ── 上部ゴールドライン ── */
-    .top-accent {
-      background: var(--gold);
-      height: 5px;
-      flex-shrink: 0;
-    }
+/* ── ゴールドバー（上下） ── */
+.bar-top    { position: absolute; top: 0;    left: 0; right: 0; height: 4px; background: var(--g); }
+.bar-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--g); }
 
-    /* ══════════════════════════════
-       ① ヒーロー（黒背景キャッチ）
-    ══════════════════════════════ */
-    .hero {
-      background: var(--black);
-      color: #fff;
-      text-align: center;
-      padding: 20px 18mm 22px;
-      flex-shrink: 0;
-      position: relative;
-    }
-    /* 下向き三角 */
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -16px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-left: 24px solid transparent;
-      border-right: 24px solid transparent;
-      border-top: 17px solid var(--black);
-      z-index: 3;
-    }
-    .hero-eyebrow {
-      font-size: 8.5px;
-      letter-spacing: 4px;
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-    .hero-main {
-      font-size: 27px;
-      font-weight: 900;
-      line-height: 1.28;
-      letter-spacing: -0.3px;
-    }
-    .hero-main .accent { color: var(--gold); }
-    .hero-main .ul {
-      display: inline;
-      border-bottom: 3px solid var(--gold);
-      padding-bottom: 1px;
-    }
-    .hero-sub {
-      font-size: 10.5px;
-      color: rgba(255,255,255,0.55);
-      margin-top: 11px;
-      letter-spacing: 0.3px;
-    }
+/* ── コーナー装飾 ── */
+.corner {
+  position: absolute;
+  width: 13mm; height: 13mm;
+  border-color: rgba(214,164,81,.45);
+  border-style: solid;
+}
+.tl { top: 7mm;    left: 7mm;  border-width: 1.2px 0 0 1.2px; }
+.tr { top: 7mm;    right: 7mm; border-width: 1.2px 1.2px 0 0; }
+.bl { bottom: 7mm; left: 7mm;  border-width: 0 0 1.2px 1.2px; }
+.br { bottom: 7mm; right: 7mm; border-width: 0 1.2px 1.2px 0; }
 
-    /* ══════════════════════════════
-       ② 悩みパート
-    ══════════════════════════════ */
-    .pain-wrap {
-      padding: 26px 14mm 14px;
-      flex-shrink: 0;
-    }
-    .sec-label {
-      font-size: 8.5px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: var(--gold);
-      margin-bottom: 9px;
-    }
-    .pain-row {
-      display: flex;
-      gap: 7px;
-    }
-    .pain-card {
-      flex: 1;
-      background: var(--lightbg);
-      border-top: 3px solid var(--gold);
-      border-radius: 0 0 7px 7px;
-      padding: 10px 10px 9px;
-    }
-    .pain-icon  { font-size: 19px; display: block; margin-bottom: 5px; }
-    .pain-title { font-size: 11.5px; font-weight: 900; line-height: 1.35; color: var(--black); }
-    .pain-note  { font-size: 9px;  color: var(--gray); margin-top: 3px; line-height: 1.35; }
+/* ══ ① ヘッダー ══════════════════════════════ */
+.hdr {
+  position: absolute;
+  top: 12mm; left: 0; right: 0;
+  text-align: center;
+  padding: 0 20mm;
+}
+.eyebrow {
+  font-size: 7.5px;
+  letter-spacing: 4px;
+  color: var(--g);
+  font-weight: 700;
+  margin-bottom: 9px;
+  font-family: 'Inter', 'Arial', sans-serif;
+}
+.catch {
+  font-size: 22px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.22;
+  letter-spacing: -.2px;
+}
+.catch .acc { color: var(--g); }
+.catch .ul  { border-bottom: 2.5px solid var(--g); padding-bottom: 1px; }
+.sub {
+  margin-top: 8px;
+  font-size: 10px;
+  color: rgba(255,255,255,.45);
+  letter-spacing: .8px;
+}
 
-    /* ── 矢印帯 ── */
-    .arrow-band {
-      text-align: center;
-      padding: 5px 0;
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 2px;
-      flex-shrink: 0;
-    }
+/* ══ SVGオーバーレイ（リング＋ライン） ══════════ */
+.svg-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
 
-    /* ══════════════════════════════
-       ③ 解決パート
-    ══════════════════════════════ */
-    .solution-wrap {
-      padding: 4px 14mm 14px;
-      flex-shrink: 0;
-    }
-    .solution-row {
-      display: flex;
-      gap: 7px;
-    }
-    .solution-card {
-      flex: 1;
-      border: 1.5px solid var(--gold);
-      border-radius: 8px;
-      padding: 10px 8px 9px;
-      text-align: center;
-      background: var(--offwhite);
-    }
-    .sol-icon  { font-size: 21px; display: block; margin-bottom: 4px; }
-    .sol-title { font-size: 11px; font-weight: 900; color: var(--black); margin-bottom: 2px; }
-    .sol-desc  { font-size: 8.5px; color: var(--gray); line-height: 1.35; }
+/* ══ QRコード ════════════════════════════════ */
+/* 中心点: left=50%, top=53.2% = (105mm, 158mm) */
+.qr-glow {
+  position: absolute;
+  left: 50%; top: 53.2%;
+  transform: translate(-50%, -50%);
+  width: 96mm; height: 96mm;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(214,164,81,.2) 0%, transparent 68%);
+  pointer-events: none;
+  z-index: 5;
+}
+.qr-wrap {
+  position: absolute;
+  left: 50%; top: 53.2%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+.qr-frame {
+  border: 4px solid var(--g);
+  border-radius: 14px;
+  padding: 9px;
+  background: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(214,164,81,.25),
+    0 0 30px rgba(214,164,81,.6),
+    0 0 70px rgba(214,164,81,.2);
+}
+.qr-frame img {
+  width: 65mm; height: 65mm;
+  display: block;
+  border-radius: 5px;
+}
+/* QR上下の小テキスト */
+.qr-top-lbl {
+  text-align: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: rgba(255,255,255,.35);
+  letter-spacing: 2px;
+  margin-bottom: 7px;
+  font-family: 'Inter', sans-serif;
+}
+.qr-bottom-lbl {
+  text-align: center;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--g);
+  letter-spacing: 1.5px;
+  margin-top: 7px;
+  font-family: 'Inter', sans-serif;
+}
 
-    /* ══════════════════════════════
-       ④ ベネフィット帯
-    ══════════════════════════════ */
-    .benefit {
-      background: var(--gold);
-      padding: 12px 14mm;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .benefit-main {
-      font-size: 15.5px;
-      font-weight: 900;
-      color: var(--black);
-      line-height: 1.4;
-    }
-    .benefit-main .wh { color: #fff; }
-    .benefit-sub {
-      font-size: 9.5px;
-      color: rgba(0,0,0,0.55);
-      margin-top: 3px;
-    }
+/* ══ 放射アイテム ══════════════════════════════
+   中心(105,158)mm / 半径80mm / 8方向
+   ─────────────────────────────────
+   配置（%、210×297mm基準）:
+   ① 0°   右    集客        88.1%, 53.2%
+   ② 45°  右下  売上分析    77.0%, 72.4%
+   ③ 90°  下    予約        50.0%, 80.1%
+   ④ 135° 左下  採用        23.0%, 72.4%
+   ⑤ 180° 左    SNS         11.9%, 53.2%
+   ⑥ 225° 左上  問い合わせ  23.0%, 34.0%
+   ⑦ 270° 上    業務効率化  50.0%, 26.3%
+   ⑧ 315° 右上  顧客管理    77.0%, 34.0%
+   ════════════════════════════════════════ */
+.it {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  z-index: 10;
+}
+.it-icon { font-size: 21px; line-height: 1; margin-bottom: 4px; }
+.it-lbl  { font-size: 11.5px; font-weight: 900; color: #fff; white-space: nowrap; line-height: 1; }
+.it-en   { font-size: 7px; font-weight: 700; color: var(--g); letter-spacing: 1.2px; margin-top: 3px; font-family: 'Inter', 'Arial', sans-serif; }
 
-    /* ══════════════════════════════
-       ⑤ QRコードメインエリア
-    ══════════════════════════════ */
-    .qr-area {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 14mm 6px;
-      background: var(--offwhite);
-    }
-    .qr-lead {
-      font-size: 10.5px;
-      color: var(--gray);
-      letter-spacing: 0.5px;
-      margin-bottom: 5px;
-    }
-    .qr-headline {
-      font-size: 23px;
-      font-weight: 900;
-      color: var(--black);
-      text-align: center;
-      line-height: 1.25;
-      margin-bottom: 13px;
-    }
-    .qr-headline .accent {
-      color: var(--gold);
-      border-bottom: 3px solid var(--gold);
-    }
-    /* 矢印 */
-    .qr-arrow {
-      font-size: 30px;
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 10px;
-    }
-    /* QR外枠 */
-    .qr-outer {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
-    .qr-box {
-      border: 5px solid var(--gold);
-      border-radius: 14px;
-      padding: 10px;
-      background: #fff;
-      box-shadow:
-        0 0 0 1px rgba(214,164,81,0.2),
-        0 10px 36px rgba(214,164,81,0.22),
-        0 2px 8px rgba(0,0,0,0.08);
-      display: inline-block;
-    }
-    .qr-box img {
-      width: 155px;
-      height: 155px;
-      display: block;
-      border-radius: 6px;
-    }
-    /* コーナーマーカー */
-    .qr-c {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-color: var(--black);
-      border-style: solid;
-    }
-    .qr-c.tl { top: -3px; left: -3px;   border-width: 3px 0 0 3px; }
-    .qr-c.tr { top: -3px; right: -3px;  border-width: 3px 3px 0 0; }
-    .qr-c.bl { bottom: -3px; left: -3px;  border-width: 0 0 3px 3px; }
-    .qr-c.br { bottom: -3px; right: -3px; border-width: 0 3px 3px 0; }
+/* ══ CTA ═══════════════════════════════════ */
+.cta {
+  position: absolute;
+  bottom: 10mm; left: 0; right: 0;
+  text-align: center;
+}
+.cta-btn {
+  display: inline-block;
+  background: var(--g);
+  color: #000;
+  font-size: 13.5px;
+  font-weight: 900;
+  padding: 11px 36px;
+  border-radius: 34px;
+  letter-spacing: .5px;
+  margin-bottom: 8px;
+}
+.cta-co {
+  font-size: 7.5px;
+  color: rgba(255,255,255,.28);
+  letter-spacing: 2.5px;
+  font-family: 'Inter', 'Arial', sans-serif;
+}
 
-    /* CTAボタン風テキスト */
-    .qr-cta-text {
-      background: var(--black);
-      color: #fff;
-      font-size: 11.5px;
-      font-weight: 900;
-      padding: 9px 28px;
-      border-radius: 30px;
-      letter-spacing: 0.5px;
-    }
-    .qr-cta-text .gold { color: var(--gold); }
-    .qr-url {
-      font-size: 8.5px;
-      color: #bbb;
-      margin-top: 6px;
-      letter-spacing: 0.5px;
-    }
-
-    /* ══════════════════════════════
-       ⑥ フッター
-    ══════════════════════════════ */
-    .footer {
-      background: var(--black);
-      padding: 10px 14mm;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-shrink: 0;
-    }
-    .co-name {
-      font-size: 15px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 0.5px;
-    }
-    .co-name span { color: var(--gold); }
-    .co-tag {
-      font-size: 8px;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 1px;
-      margin-top: 2px;
-    }
-    .free-badge {
-      background: var(--gold);
-      color: var(--black);
-      font-size: 12px;
-      font-weight: 900;
-      padding: 7px 18px;
-      border-radius: 22px;
-      letter-spacing: 0.5px;
-    }
-    .free-tag {
-      font-size: 8px;
-      color: rgba(255,255,255,0.4);
-      text-align: right;
-      margin-top: 3px;
-    }
-
-    /* ── 下部ゴールドライン ── */
-    .bottom-accent {
-      background: var(--gold);
-      height: 4px;
-      flex-shrink: 0;
-    }
-
-  </style>
+</style>
 </head>
 <body>
-
 <div class="flyer">
 
-  <!-- 上部ゴールドライン -->
-  <div class="top-accent"></div>
+  <!-- 上下ゴールドバー -->
+  <div class="bar-top"></div>
+  <div class="bar-bottom"></div>
 
-  <!-- ① ヒーロー：キャッチコピー -->
-  <div class="hero">
-    <div class="hero-eyebrow">FOR BUSINESS OWNERS ／ AI CONSULTING</div>
-    <h1 class="hero-main">
-      その作業、本当に<br>
-      <span class="ul accent">あなたがやる必要</span><br>
-      ありますか？
-    </h1>
-    <p class="hero-sub">経営者の時間は、売上を生む仕事に使ってください。</p>
+  <!-- コーナー -->
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <!-- ① ヘッダー -->
+  <div class="hdr">
+    <div class="eyebrow">AI BUSINESS CONSULTING</div>
+    <div class="catch">
+      その作業、まだ<br>
+      <span class="ul acc">自分</span>でやりますか？
+    </div>
+    <div class="sub">AIで"時間"と"売上"を同時に増やす</div>
   </div>
 
-  <!-- ② 悩みパート -->
-  <div class="pain-wrap">
-    <div class="sec-label">▸ こんな悩みありませんか？</div>
-    <div class="pain-row">
-      <div class="pain-card">
-        <span class="pain-icon">⏱</span>
-        <div class="pain-title">作業に追われて<br>時間がない</div>
-        <div class="pain-note">書類・メール・<br>報告書が山積み</div>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">👥</span>
-        <div class="pain-title">人手が足りない・<br>採用できない</div>
-        <div class="pain-note">人件費は上がるのに<br>生産性が上がらない</div>
-      </div>
-      <div class="pain-card">
-        <span class="pain-icon">📉</span>
-        <div class="pain-title">集客が不安定で<br>売上が読めない</div>
-        <div class="pain-note">SNS・広告に<br>手が全く回らない</div>
-      </div>
+  <!-- SVG：同心円リング＋8本の放射ライン
+       viewBox座標はmm単位（210×297）
+       中心: (105, 158)
+       ラインのstart radius=39mm / end radius=71mm
+       アイテムdot at radius=80mm
+  -->
+  <svg class="svg-layer" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- 同心円（内リング・外リング） -->
+    <circle cx="105" cy="158" r="39"  fill="none" stroke="rgba(214,164,81,0.13)" stroke-width="0.4"/>
+    <circle cx="105" cy="158" r="80"  fill="none" stroke="rgba(214,164,81,0.07)" stroke-width="0.4"/>
+    <circle cx="105" cy="158" r="110" fill="none" stroke="rgba(214,164,81,0.04)" stroke-width="0.4"/>
+
+    <!--
+      放射ライン計算（r=39→71、8方向）
+      cos/sinで各角度の座標を算出：
+      0°   → x: 105+r,   y: 158
+      45°  → x: 105+r×0.707, y: 158+r×0.707
+      90°  → x: 105,     y: 158+r
+      135° → x: 105-r×0.707, y: 158+r×0.707
+      180° → x: 105-r,   y: 158
+      225° → x: 105-r×0.707, y: 158-r×0.707
+      270° → x: 105,     y: 158-r
+      315° → x: 105+r×0.707, y: 158-r×0.707
+    -->
+
+    <!-- ① 0° 集客 -->
+    <line x1="144" y1="158" x2="174" y2="158"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+    <!-- ② 45° 売上分析 -->
+    <line x1="132.6" y1="185.6" x2="155.2" y2="208.2"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+    <!-- ③ 90° 予約 -->
+    <line x1="105" y1="197" x2="105" y2="229"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+    <!-- ④ 135° 採用 -->
+    <line x1="77.4" y1="185.6" x2="54.8" y2="208.2"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+    <!-- ⑤ 180° SNS -->
+    <line x1="66" y1="158" x2="34" y2="158"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+    <!-- ⑥ 225° 問い合わせ -->
+    <line x1="77.4" y1="130.4" x2="54.8" y2="107.8"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+    <!-- ⑦ 270° 業務効率化 -->
+    <line x1="105" y1="119" x2="105" y2="87"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+    <!-- ⑧ 315° 顧客管理 -->
+    <line x1="132.6" y1="130.4" x2="155.2" y2="107.8"
+          stroke="#d6a451" stroke-width="0.55" stroke-dasharray="2 2.5" opacity="0.7"/>
+
+    <!-- アイテムの接続ドット（radius=80mm） -->
+    <!-- ① 0°   (185, 158) -->
+    <circle cx="185"  cy="158"   r="1.8" fill="#d6a451" opacity="0.9"/>
+    <!-- ② 45°  (161.6, 214.6) -->
+    <circle cx="161.6" cy="214.6" r="1.8" fill="#d6a451" opacity="0.9"/>
+    <!-- ③ 90°  (105, 238) -->
+    <circle cx="105"  cy="238"   r="1.8" fill="#d6a451" opacity="0.9"/>
+    <!-- ④ 135° (48.4, 214.6) -->
+    <circle cx="48.4" cy="214.6" r="1.8" fill="#d6a451" opacity="0.9"/>
+    <!-- ⑤ 180° (25, 158) -->
+    <circle cx="25"   cy="158"   r="1.8" fill="#d6a451" opacity="0.9"/>
+    <!-- ⑥ 225° (48.4, 101.4) -->
+    <circle cx="48.4" cy="101.4" r="1.8" fill="#d6a451" opacity="0.9"/>
+    <!-- ⑦ 270° (105, 78) -->
+    <circle cx="105"  cy="78"    r="1.8" fill="#d6a451" opacity="0.9"/>
+    <!-- ⑧ 315° (161.6, 101.4) -->
+    <circle cx="161.6" cy="101.4" r="1.8" fill="#d6a451" opacity="0.9"/>
+
+  </svg>
+
+  <!-- QRグロー＋本体 -->
+  <div class="qr-glow"></div>
+  <div class="qr-wrap">
+    <div class="qr-top-lbl">▸ SCAN ME ◂</div>
+    <div class="qr-frame">
+      <img src="qr.jpg" alt="QR｜TEZUIntelligence">
     </div>
+    <div class="qr-bottom-lbl">FREE · 30SEC · NO APP</div>
   </div>
 
-  <!-- 矢印帯 -->
-  <div class="arrow-band">↓ &nbsp; AIで、すべて解決できます &nbsp; ↓</div>
+  <!-- ② 8つの放射アイテム -->
 
-  <!-- ③ 解決パート -->
-  <div class="solution-wrap">
-    <div class="solution-row">
-      <div class="solution-card">
-        <span class="sol-icon">🤖</span>
-        <div class="sol-title">業務を自動化</div>
-        <div class="sol-desc">書類・メール・日報を<br>AIが自動で作成</div>
-      </div>
-      <div class="solution-card">
-        <span class="sol-icon">📢</span>
-        <div class="sol-title">集客を仕組み化</div>
-        <div class="sol-desc">SNS・クチコミ返信を<br>AIが代わりに作成</div>
-      </div>
-      <div class="solution-card">
-        <span class="sol-icon">💰</span>
-        <div class="sol-title">コストを削減</div>
-        <div class="sol-desc">月20〜40時間分の<br>工数を削減できる</div>
-      </div>
-    </div>
+  <!-- ① 0° right：集客 -->
+  <div class="it" style="left:88.1%;top:53.2%">
+    <div class="it-icon">📢</div>
+    <div class="it-lbl">集客</div>
+    <div class="it-en">MARKETING</div>
   </div>
 
-  <!-- ④ ベネフィット帯 -->
-  <div class="benefit">
-    <div class="benefit-main">
-      時間が増える ＝ <span class="wh">売上を作る時間が増える</span>
-    </div>
-    <div class="benefit-sub">「もっと早く始めればよかった」――多くの経営者の声です</div>
+  <!-- ② 45° lower-right：売上分析 -->
+  <div class="it" style="left:77%;top:72.3%">
+    <div class="it-icon">📊</div>
+    <div class="it-lbl">売上分析</div>
+    <div class="it-en">ANALYTICS</div>
   </div>
 
-  <!-- ⑤ QRコード：メインCTA -->
-  <div class="qr-area">
-    <div class="qr-lead">▸ あなたの業務、どこからAIに任せられる？</div>
-    <div class="qr-headline">
-      スマホで <span class="accent">3分</span>、無料で診断
-    </div>
-    <div class="qr-arrow">↓</div>
-    <div class="qr-outer">
-      <div class="qr-box">
-        <!-- QRコード画像（同フォルダの qr.jpg） -->
-        <img src="qr.jpg" alt="QRコード｜TEZUIntelligence">
-      </div>
-      <div class="qr-c tl"></div>
-      <div class="qr-c tr"></div>
-      <div class="qr-c bl"></div>
-      <div class="qr-c br"></div>
-    </div>
-    <div class="qr-cta-text">👆 読み取って <span class="gold">今すぐ無料診断</span> を試す</div>
-    <div class="qr-url">https://tezu-intelligence-hp.vercel.app/</div>
+  <!-- ③ 90° bottom：予約 -->
+  <div class="it" style="left:50%;top:80.1%">
+    <div class="it-icon">📅</div>
+    <div class="it-lbl">予約</div>
+    <div class="it-en">BOOKING</div>
   </div>
 
-  <!-- ⑥ フッター -->
-  <div class="footer">
-    <div>
-      <div class="co-name">TEZU<span>Intelligence</span></div>
-      <div class="co-tag">AI Strategy Consultant ／ 中小企業向けAI導入支援専門</div>
-    </div>
-    <div>
-      <div class="free-badge">初回相談 無料</div>
-      <div class="free-tag">LINE または HP からご予約ください</div>
-    </div>
+  <!-- ④ 135° lower-left：採用 -->
+  <div class="it" style="left:23%;top:72.3%">
+    <div class="it-icon">🎯</div>
+    <div class="it-lbl">採用</div>
+    <div class="it-en">HIRING</div>
   </div>
 
-  <!-- 下部ゴールドライン -->
-  <div class="bottom-accent"></div>
+  <!-- ⑤ 180° left：SNS -->
+  <div class="it" style="left:11.9%;top:53.2%">
+    <div class="it-icon">📱</div>
+    <div class="it-lbl">SNS</div>
+    <div class="it-en">SOCIAL</div>
+  </div>
+
+  <!-- ⑥ 225° upper-left：問い合わせ -->
+  <div class="it" style="left:23%;top:34.1%">
+    <div class="it-icon">💬</div>
+    <div class="it-lbl">問い合わせ</div>
+    <div class="it-en">SUPPORT</div>
+  </div>
+
+  <!-- ⑦ 270° top：業務効率化 -->
+  <div class="it" style="left:50%;top:26.3%">
+    <div class="it-icon">⚡</div>
+    <div class="it-lbl">業務効率化</div>
+    <div class="it-en">AUTOMATION</div>
+  </div>
+
+  <!-- ⑧ 315° upper-right：顧客管理 -->
+  <div class="it" style="left:77%;top:34.1%">
+    <div class="it-icon">👥</div>
+    <div class="it-lbl">顧客管理</div>
+    <div class="it-en">CRM</div>
+  </div>
+
+  <!-- ⑤ CTA -->
+  <div class="cta">
+    <div class="cta-btn">📱 スマホで30秒チェック（無料）</div>
+    <div class="cta-co">TEZU INTELLIGENCE ／ AI STRATEGY CONSULTANT</div>
+  </div>
 
 </div>
-
 </body>
 </html>
