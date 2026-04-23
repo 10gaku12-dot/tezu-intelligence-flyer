@@ -173,26 +173,33 @@ body {
   white-space: nowrap; line-height: 1;
 }
 .ai-text { display: block; font-size: 0; line-height: 1; }
-/* ② AI導入 ─ 1.4倍拡大・サブ主役として機能 */
+/* ② AI導入 ─ くっきり表示 */
 .ai-ai {
-  font-size: 64px; font-weight: 900;          /* 46→64px (+1.39倍) */
-  color: var(--g2); letter-spacing: 5px;
+  font-size: 64px; font-weight: 900;
+  color: #ffe040; letter-spacing: 5px;
+  /* くっきり: 細い黒縁 + 鮮明ゴールドグロー */
   text-shadow:
-    0 0  5px rgba(255,255,200,1),
-    0 0 14px rgba(255,230,40,1),
-    0 0 30px rgba(255,200,30,1),
-    0 0 65px rgba(212,168,67,.95),
-    0 0 120px rgba(212,168,67,.65),
-    0 0 200px rgba(212,168,67,.30);
+    -1px -1px 0 rgba(0,0,0,.95),
+     1px -1px 0 rgba(0,0,0,.95),
+    -1px  1px 0 rgba(0,0,0,.95),
+     1px  1px 0 rgba(0,0,0,.95),
+    0 0  8px rgba(255,240,0,1),
+    0 0 22px rgba(255,200,0,.95),
+    0 0 50px rgba(212,168,67,.80),
+    0 0 100px rgba(212,168,67,.45);
 }
 .ai-nyu {
-  font-size: 52px; font-weight: 900;          /* 38→52px (+1.37倍) */
-  color: #fff; letter-spacing: 7px;
+  font-size: 52px; font-weight: 900;
+  color: #ffffff; letter-spacing: 7px;
+  /* くっきり: 黒縁 + 金グロー */
   text-shadow:
-    0 0  5px rgba(255,250,180,1),
-    0 0 14px rgba(255,220,60,.95),
-    0 0 32px rgba(212,168,67,.70),
-    0 0 70px rgba(212,168,67,.40);
+    -1px -1px 0 rgba(0,0,0,.95),
+     1px -1px 0 rgba(0,0,0,.95),
+    -1px  1px 0 rgba(0,0,0,.95),
+     1px  1px 0 rgba(0,0,0,.95),
+    0 0  8px rgba(255,240,120,.90),
+    0 0 22px rgba(212,168,67,.75),
+    0 0 50px rgba(212,168,67,.45);
 }
 .ai-sub {
   display: block; margin-top: 9px;
