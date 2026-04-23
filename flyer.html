@@ -2,460 +2,557 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>TEZU Intelligence | AI業務診断</title>
+<title>TEZU Intelligence | AI業務診断チラシ</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&family=Inter:wght@700;900&display=swap" rel="stylesheet">
 <style>
 
-/* ══════════════════════════════════════════════
-   印刷設定
-══════════════════════════════════════════════ */
-@page { size: A4 portrait; margin: 0; }
-@media print {
-  html, body { width: 210mm; height: 297mm; background: none; }
-  .flyer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   印刷 / ページ設定
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@page {
+  size: 210mm 297mm;
+  margin: 0;
 }
+@media print {
+  html, body { width: 210mm; height: 297mm; }
+  .wrap { -webkit-print-color-adjust: exact; print-color-adjust: exact; page-break-inside: avoid; }
+}
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ══════════════════════════════════════════════
-   カラー変数
-══════════════════════════════════════════════ */
 :root {
-  --g:   #d6a451;   /* メインゴールド */
-  --g2:  #f0c46a;   /* ライトゴールド */
-  --bk:  #090909;   /* 背景 */
+  --gold:    #d4a843;
+  --gold-lt: #f2c96a;
+  --gold-dk: #a07828;
+  --bg:      #080808;
 }
 
-html { background: #333; }
+html { background: #2a2a2a; }
 body {
   width: 210mm;
   margin: 0 auto;
   font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
 }
 
-/* ══════════════════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    チラシ本体
-══════════════════════════════════════════════ */
-.flyer {
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.wrap {
+  position: relative;
   width: 210mm;
   height: 297mm;
-  background: var(--bk);
-  position: relative;
+  background: var(--bg);
   overflow: hidden;
 }
 
-/* ── 上下ゴールドライン ── */
-.bar {
-  position: absolute; left: 0; right: 0; height: 6px;
-  background: linear-gradient(90deg, var(--g) 0%, var(--g2) 50%, var(--g) 100%);
+/* ── ゴールドライン（上下） ─────────────── */
+.strip {
+  position: absolute; left: 0; right: 0; height: 5px;
+  background: linear-gradient(90deg,
+    transparent 0%, var(--gold-dk) 10%,
+    var(--gold) 30%, var(--gold-lt) 50%,
+    var(--gold) 70%, var(--gold-dk) 90%, transparent 100%);
+  z-index: 30;
 }
-.bar-top    { top: 0; }
-.bar-bottom { bottom: 0; }
+.strip-top    { top: 0; }
+.strip-bottom { bottom: 0; }
 
-/* ── コーナー装飾 ── */
-.corner {
-  position: absolute; width: 14mm; height: 14mm;
-  border-color: rgba(214,164,81,.38); border-style: solid;
+/* ── コーナーブラケット ──────────────────── */
+.brk {
+  position: absolute;
+  width: 12mm; height: 12mm;
+  border-color: rgba(212,168,67,.45);
+  border-style: solid;
+  z-index: 30;
 }
-.tl { top:8mm; left:8mm;   border-width: 1.5px 0 0 1.5px; }
-.tr { top:8mm; right:8mm;  border-width: 1.5px 1.5px 0 0; }
-.bl { bottom:8mm; left:8mm;  border-width: 0 0 1.5px 1.5px; }
-.br { bottom:8mm; right:8mm; border-width: 0 1.5px 1.5px 0; }
+.brk-tl { top: 8mm;    left: 8mm;    border-width: 1.5px 0 0 1.5px; }
+.brk-tr { top: 8mm;    right: 8mm;   border-width: 1.5px 1.5px 0 0; }
+.brk-bl { bottom: 8mm; left: 8mm;    border-width: 0 0 1.5px 1.5px; }
+.brk-br { bottom: 8mm; right: 8mm;   border-width: 0 1.5px 1.5px 0; }
 
-/* ══════════════════════════════════════════════
-   SVG 放射レイヤー
-══════════════════════════════════════════════ */
-.svg-layer {
-  position: absolute; top: 0; left: 0;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SVG 放射レイヤー（全面）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.radial-svg {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
-  pointer-events: none; z-index: 1;
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* ══════════════════════════════════════════════
-   ヘッダーブロック
-══════════════════════════════════════════════ */
-.hdr {
-  position: absolute; top: 12mm; left: 0; right: 0;
-  text-align: center; padding: 0 16mm; z-index: 10;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   上部テキストブロック
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.top-block {
+  position: absolute;
+  top: 11mm; left: 0; right: 0;
+  text-align: center;
+  padding: 0 15mm;
+  z-index: 20;
 }
-.hdr-badge {
+/* 会社バッジ */
+.co-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 6.5px; font-weight: 700;
-  color: var(--g); letter-spacing: 4px;
-  text-transform: uppercase; margin-bottom: 9px;
+  font-size: 6.5px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
 }
-.hdr-copy {
-  font-size: 20px; font-weight: 900;
-  color: #fff; line-height: 1.28; letter-spacing: -.4px;
+.co-badge::before,
+.co-badge::after {
+  content: '';
+  flex: 1;
+  height: 0.6px;
+  background: linear-gradient(90deg, transparent, rgba(212,168,67,.6));
+  width: 12mm;
 }
-.hdr-copy .acc { color: var(--g); }
+.co-badge::after {
+  background: linear-gradient(90deg, rgba(212,168,67,.6), transparent);
+}
+/* メインキャッチ */
+.main-catch {
+  font-size: 21px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.25;
+  letter-spacing: -.5px;
+  margin-bottom: 2mm;
+}
+.main-catch .hl { color: var(--gold); }
 
-/* ── QR上 コピーブロック ── */
-.qr-copy {
-  position: absolute; top: 31mm; left: 0; right: 0;
-  text-align: center; padding: 0 14mm; z-index: 10;
+/* ── QR上コピー ──────────────────────────── */
+.sub-copy {
+  position: absolute;
+  top: 34mm; left: 0; right: 0;
+  text-align: center;
+  padding: 0 14mm;
+  z-index: 20;
 }
-.qr-copy-en {
+.sub-copy-en {
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 6px; font-weight: 700;
-  color: rgba(255,255,255,.22); letter-spacing: 3.5px;
-  text-transform: uppercase; margin-bottom: 5px;
+  font-size: 5.5px; font-weight: 700;
+  color: rgba(255,255,255,.20);
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
 }
-.qr-copy-ja {
-  font-size: 19.5px; font-weight: 900;
+.sub-copy-ja {
+  font-size: 19px; font-weight: 900;
   color: #fff; line-height: 1.28; letter-spacing: -.3px;
 }
-.qr-copy-ja em {
-  color: var(--g); font-style: normal;
-  border-bottom: 2.5px solid var(--g); padding-bottom: 1px;
+.sub-copy-ja em {
+  font-style: normal; color: var(--gold);
+  border-bottom: 2.2px solid var(--gold);
+  padding-bottom: 1px;
 }
 
-/* ══════════════════════════════════════════════
-   QR グロー背景
-══════════════════════════════════════════════ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   QR グロー（背景光）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .qr-glow {
-  position: absolute; left: 50%; top: 52.5%;
+  position: absolute;
+  /* QR中心 left=50%, top=51% */
+  left: 50%; top: 51%;
   transform: translate(-50%, -50%);
-  width: 124mm; height: 124mm; border-radius: 50%;
+  width: 130mm; height: 130mm;
+  border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(214,164,81,.30) 0%,
-    rgba(214,164,81,.10) 32%,
-    rgba(214,164,81,.03) 52%,
-    transparent 66%);
-  pointer-events: none; z-index: 3;
+    rgba(212,168,67,.32) 0%,
+    rgba(212,168,67,.12) 30%,
+    rgba(212,168,67,.04) 52%,
+    transparent 68%);
+  pointer-events: none; z-index: 4;
 }
 
-/* ══════════════════════════════════════════════
-   QR コード本体（主役）
-══════════════════════════════════════════════ */
-.qr-wrap {
-  position: absolute; left: 50%; top: 52.5%;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   QR コード ── 絶対的主役
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.qr-block {
+  position: absolute;
+  left: 50%; top: 51%;
   transform: translate(-50%, -50%);
-  display: flex; flex-direction: column;
-  align-items: center; z-index: 20;
+  display: flex; flex-direction: column; align-items: center;
+  z-index: 20;
 }
-.qr-scan {
+.qr-label {
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 6.5px; font-weight: 700;
-  letter-spacing: 5px; color: var(--g);
+  font-size: 6px; font-weight: 700;
+  letter-spacing: 5px; color: var(--gold);
   margin-bottom: 4px;
 }
-/* ゴールド発光フレーム 6層 */
-.qr-frame {
-  border: 5px solid var(--g);
+/* 6層グロー付き金枠 */
+.qr-card {
+  background: #fff;
+  border: 5px solid var(--gold);
   border-radius: 18px;
   padding: 10px;
-  background: #fff;
   box-shadow:
-    0 0 0 1px  rgba(214,164,81,.40),
-    0 0 22px   rgba(214,164,81,1),
-    0 0 54px   rgba(214,164,81,.90),
-    0 0 110px  rgba(214,164,81,.62),
-    0 0 170px  rgba(214,164,81,.34),
-    0 0 250px  rgba(214,164,81,.15);
+    0 0  0   1px  rgba(212,168,67,.42),
+    0 0  22px 0px rgba(212,168,67,1),
+    0 0  55px 0px rgba(212,168,67,.90),
+    0 0 115px 0px rgba(212,168,67,.62),
+    0 0 180px 0px rgba(212,168,67,.34),
+    0 0 270px 0px rgba(212,168,67,.16);
 }
-/* QR画像: 差し替える場合は src="" を変更するだけ */
-.qr-frame img {
+/*
+  QR画像: 差し替えは src="" のみ変更
+  置き換え例: src="qr.png" / src="data:image/png;base64,..."
+*/
+.qr-card img {
+  display: block;
   width: 80mm; height: 80mm;
-  display: block; border-radius: 5px;
+  border-radius: 5px;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
 }
 
-/* ══════════════════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    AI導入 ── QR直下の大訴求
-══════════════════════════════════════════════ */
-.ai-intro {
-  position: absolute; left: 50%; top: 78%;
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.ai-cta {
+  position: absolute;
+  left: 50%; top: 77.5%;
   transform: translateX(-50%);
-  text-align: center; z-index: 22;
-  white-space: nowrap;
+  text-align: center;
+  z-index: 22; white-space: nowrap;
 }
-.ai-intro-main {
-  font-size: 36px; font-weight: 900;
-  color: #fff; letter-spacing: 8px; line-height: 1;
+.ai-cta-main {
+  font-size: 38px; font-weight: 900;
+  color: #fff; letter-spacing: 10px; line-height: 1;
   text-shadow:
-    0 0 12px rgba(214,164,81,1),
-    0 0 32px rgba(214,164,81,.90),
-    0 0 70px rgba(214,164,81,.55),
-    0 0 120px rgba(214,164,81,.28);
+    0 0 14px rgba(212,168,67,1),
+    0 0 36px rgba(212,168,67,.92),
+    0 0 78px rgba(212,168,67,.58),
+    0 0 140px rgba(212,168,67,.28);
 }
-.ai-intro-main .gold {
-  color: var(--g); font-size: 42px;
-}
-.ai-intro-sub {
-  display: block; margin-top: 5px;
+.ai-cta-main .gold { color: var(--gold); font-size: 46px; }
+.ai-cta-sub {
+  display: block; margin-top: 6px;
   font-size: 7px; font-weight: 700;
-  color: rgba(255,255,255,.36); letter-spacing: 4px;
+  color: rgba(255,255,255,.34);
+  letter-spacing: 4.5px;
 }
 
-/* ══════════════════════════════════════════════
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    放射状バブル（6個）
-══════════════════════════════════════════════ */
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .bbl {
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 15;
-  /* 円形 */
+  /* 円形サイズ */
   width: 29mm; height: 29mm;
   border-radius: 50%;
-  /* 暗いグラデ背景 */
-  background: radial-gradient(circle at 38% 32%,
-    rgba(38,28,10,.97) 25%,
-    rgba(8,7,5,.99)    100%);
-  /* ゴールドボーダー + グロー */
-  border: 1.6px solid rgba(214,164,81,.58);
+  /* 内部グラデ：中央やや明るめ → 周縁暗く */
+  background: radial-gradient(circle at 38% 30%,
+    rgba(48,36,12,.97) 0%,
+    rgba(20,16,4,.98) 55%,
+    rgba(6,5,2,.99) 100%);
+  /* ゴールドリム + 外側グロー */
+  border: 1.8px solid rgba(212,168,67,.60);
   box-shadow:
-    0 0 0   0.5px rgba(214,164,81,.18),
-    0 0 10px      rgba(214,164,81,.42),
-    0 0 24px      rgba(214,164,81,.20),
-    inset 0 0 16px rgba(214,164,81,.06);
-  /* 中央揃え */
+    0 0 0   0.6px rgba(212,168,67,.18),
+    0 0 10px     rgba(212,168,67,.45),
+    0 0 26px     rgba(212,168,67,.22),
+    0 0 48px     rgba(212,168,67,.08),
+    inset 0 0 18px rgba(212,168,67,.07);
+  /* 内部レイアウト */
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 2.5mm 1.5mm;
+  padding: 0 1.5mm;
+  gap: 2px;
 }
-.bbl-icon {
-  font-size: 17px; line-height: 1; margin-bottom: 3px;
-  filter: drop-shadow(0 0 5px rgba(214,164,81,.55));
+.bbl-ic {
+  font-size: 16px; line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(212,168,67,.60));
 }
-.bbl-lbl {
+.bbl-tx {
   font-size: 10.5px; font-weight: 900;
-  color: #fff; line-height: 1.2; letter-spacing: .2px;
+  color: #fff; letter-spacing: .1px; line-height: 1.2;
 }
-.bbl-sub {
+.bbl-st {
   font-size: 5.5px; font-weight: 700;
-  color: var(--g); letter-spacing: .3px;
-  line-height: 1.4; margin-top: 3px;
+  color: var(--gold); letter-spacing: .2px; line-height: 1.4;
 }
 
-/* ══════════════════════════════════════════════
-   CTA ボタン
-══════════════════════════════════════════════ */
-.cta {
-  position: absolute; left: 50%; bottom: 18mm;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CTAボタン
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.btn-cta {
+  position: absolute;
+  left: 50%; bottom: 17mm;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, var(--g) 0%, var(--g2) 50%, var(--g) 100%);
-  color: #000; font-weight: 900; font-size: 14px;
-  padding: 11px 30px; border-radius: 50px;
-  white-space: nowrap; letter-spacing: .5px;
-  display: flex; align-items: center; gap: 6px;
-  box-shadow:
-    0 0 28px rgba(214,164,81,.82),
-    0 0 68px rgba(214,164,81,.32),
-    0 5px 20px rgba(0,0,0,.65);
   z-index: 25;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 28px;
+  background: linear-gradient(135deg,
+    var(--gold-dk) 0%, var(--gold) 35%,
+    var(--gold-lt) 60%, var(--gold) 100%);
+  color: #1a0f00;
+  font-size: 14px; font-weight: 900;
+  border-radius: 50px; white-space: nowrap;
+  letter-spacing: .4px;
+  box-shadow:
+    0 0 28px rgba(212,168,67,.85),
+    0 0 70px rgba(212,168,67,.36),
+    0 4px 22px rgba(0,0,0,.70);
 }
-.cta-icon { font-size: 14px; }
+.btn-cta-ic { font-size: 15px; }
 
-/* ── フッター ── */
+/* ── フッター ─────────────────────────────── */
 .footer {
-  position: absolute; bottom: 9mm; left: 0; right: 0;
-  text-align: center; z-index: 10;
+  position: absolute;
+  bottom: 9mm; left: 0; right: 0;
+  text-align: center; z-index: 20;
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 6px; font-weight: 700;
-  color: rgba(214,164,81,.36); letter-spacing: 4px;
-  text-transform: uppercase;
+  font-size: 5.5px; font-weight: 700;
+  color: rgba(212,168,67,.32);
+  letter-spacing: 5px; text-transform: uppercase;
 }
 
 </style>
 </head>
 <body>
-<div class="flyer">
+<div class="wrap">
 
   <!-- 上下ゴールドライン -->
-  <div class="bar bar-top"></div>
-  <div class="bar bar-bottom"></div>
+  <div class="strip strip-top"></div>
+  <div class="strip strip-bottom"></div>
 
-  <!-- コーナー装飾 -->
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
+  <!-- コーナーブラケット -->
+  <div class="brk brk-tl"></div>
+  <div class="brk brk-tr"></div>
+  <div class="brk brk-bl"></div>
+  <div class="brk brk-br"></div>
 
   <!--
-  ════════════════════════════════════════════
-  SVG 放射レイヤー
-  QR中心: (105, 156)mm  ─ viewBox="0 0 210 297"(mm単位)
-  バブル半径: r=68mm, 60°等分
-    0°  右:   (173, 156)
-    60° 右下:  (139, 214.9)
-   120° 左下:  (71,  214.9)
-   180° 左:   (37,  156)
-   240° 左上:  (71,  97.1)
-   300° 右上:  (139, 97.1)
-  ════════════════════════════════════════════
+  ════════════════════════════════════════════════
+  SVG 放射構造レイヤー
+  ────────────────────────────────────────────────
+  座標系 : viewBox="0 0 210 297" = mm単位
+  QR中心 : (105, 151.5)mm  ←  top=51%×297
+  バブル半径 : R = 68mm（中心からバブル中心まで）
+  配置角度 : 60°等分（0°=右, 時計回り）
+
+    0°  右:    (173,   151.5)
+   60°  右下:  (139,   210.4)  sin60=0.866, cos60=0.5
+  120°  左下:  ( 71,   210.4)
+  180°  左:    ( 37,   151.5)
+  240°  左上:  ( 71,    92.6)
+  300°  右上:  (139,    92.6)
+  ════════════════════════════════════════════════
   -->
-  <svg class="svg-layer" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg">
+  <svg class="radial-svg" viewBox="0 0 210 297"
+       xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- 放射線用グラデ(中心付近が明るく外に向かって消える) -->
+      <radialGradient id="lineGrad" cx="50%" cy="50.9%" r="35%">
+        <stop offset="0%"   stop-color="#d4a843" stop-opacity="0"/>
+        <stop offset="40%"  stop-color="#d4a843" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#d4a843" stop-opacity="0.30"/>
+      </radialGradient>
+    </defs>
 
-    <!-- ■ 同心円(内→外で薄く): 広がり感の骨格 -->
-    <circle cx="105" cy="156" r="46"
-            fill="none" stroke="rgba(214,164,81,0.24)" stroke-width="0.65"/>
-    <circle cx="105" cy="156" r="72"
-            fill="none" stroke="rgba(214,164,81,0.10)" stroke-width="0.45"
-            stroke-dasharray="2 3.5"/>
-    <circle cx="105" cy="156" r="100"
-            fill="none" stroke="rgba(214,164,81,0.048)" stroke-width="0.4"
-            stroke-dasharray="1.5 5"/>
-    <circle cx="105" cy="156" r="128"
-            fill="none" stroke="rgba(214,164,81,0.020)" stroke-width="0.35"
-            stroke-dasharray="1 7"/>
+    <!-- ■ 同心円（内→外でフェードアウト） -->
+    <circle cx="105" cy="151.5" r="46.5"
+      fill="none" stroke="rgba(212,168,67,0.28)" stroke-width="0.7"/>
+    <circle cx="105" cy="151.5" r="68"
+      fill="none" stroke="rgba(212,168,67,0.12)" stroke-width="0.5"
+      stroke-dasharray="2.5 4"/>
+    <circle cx="105" cy="151.5" r="93"
+      fill="none" stroke="rgba(212,168,67,0.055)" stroke-width="0.4"
+      stroke-dasharray="1.8 5.5"/>
+    <circle cx="105" cy="151.5" r="120"
+      fill="none" stroke="rgba(212,168,67,0.022)" stroke-width="0.35"
+      stroke-dasharray="1.2 8"/>
+    <circle cx="105" cy="151.5" r="148"
+      fill="none" stroke="rgba(212,168,67,0.010)" stroke-width="0.3"
+      stroke-dasharray="0.8 10"/>
 
-    <!-- ■ 6方向 放射破線 (r=47→r=63, バブルとQRをつなぐ) -->
-    <!-- 0° 右  -->
-    <line x1="152" y1="156"   x2="168" y2="156"
-          stroke="#d6a451" stroke-width="0.85" stroke-dasharray="2.2 2" opacity="0.82"/>
-    <!-- 60° 右下  cos=0.5 sin=0.866  -->
-    <line x1="128.5" y1="196.7" x2="138" y2="213.7"
-          stroke="#d6a451" stroke-width="0.85" stroke-dasharray="2.2 2" opacity="0.82"/>
-    <!-- 120° 左下  cos=-0.5 sin=0.866 -->
-    <line x1="81.5"  y1="196.7" x2="72"  y2="213.7"
-          stroke="#d6a451" stroke-width="0.85" stroke-dasharray="2.2 2" opacity="0.82"/>
-    <!-- 180° 左 -->
-    <line x1="58"  y1="156"   x2="42"  y2="156"
-          stroke="#d6a451" stroke-width="0.85" stroke-dasharray="2.2 2" opacity="0.82"/>
-    <!-- 240° 左上  cos=-0.5 sin=-0.866 -->
-    <line x1="81.5"  y1="115.3" x2="72"  y2="98.3"
-          stroke="#d6a451" stroke-width="0.85" stroke-dasharray="2.2 2" opacity="0.82"/>
-    <!-- 300° 右上  cos=0.5 sin=-0.866 -->
-    <line x1="128.5" y1="115.3" x2="138" y2="98.3"
-          stroke="#d6a451" stroke-width="0.85" stroke-dasharray="2.2 2" opacity="0.82"/>
+    <!-- ■ 6方向の放射破線
+         QR枠端(r=48) → バブル手前(r=63)
+         各方向: cos/sin×r, y軸下向きが正 -->
 
-    <!-- ■ 中間角ティックマーク (30/90/150/210/270/330°, r=52→59) -->
+    <!-- 0° 右   cos=1  sin=0 -->
+    <line x1="153" y1="151.5" x2="169" y2="151.5"
+          stroke="url(#lineGrad)" stroke-width="1.0"
+          stroke-dasharray="2.5 2.2" opacity="0.88"/>
+
+    <!-- 60°  cos=0.5 sin=0.866
+         r48: (105+24, 151.5+41.6)=(129,193.1)
+         r63: (105+31.5,151.5+54.6)=(136.5,206.1) -->
+    <line x1="129" y1="193.1" x2="136.5" y2="206.1"
+          stroke="url(#lineGrad)" stroke-width="1.0"
+          stroke-dasharray="2.5 2.2" opacity="0.88"/>
+
+    <!-- 120° cos=-0.5 sin=0.866 -->
+    <line x1="81"  y1="193.1" x2="73.5" y2="206.1"
+          stroke="url(#lineGrad)" stroke-width="1.0"
+          stroke-dasharray="2.5 2.2" opacity="0.88"/>
+
+    <!-- 180° cos=-1 sin=0 -->
+    <line x1="57"  y1="151.5" x2="41"  y2="151.5"
+          stroke="url(#lineGrad)" stroke-width="1.0"
+          stroke-dasharray="2.5 2.2" opacity="0.88"/>
+
+    <!-- 240° cos=-0.5 sin=-0.866 -->
+    <line x1="81"  y1="109.9" x2="73.5" y2="96.9"
+          stroke="url(#lineGrad)" stroke-width="1.0"
+          stroke-dasharray="2.5 2.2" opacity="0.88"/>
+
+    <!-- 300° cos=0.5 sin=-0.866 -->
+    <line x1="129" y1="109.9" x2="136.5" y2="96.9"
+          stroke="url(#lineGrad)" stroke-width="1.0"
+          stroke-dasharray="2.5 2.2" opacity="0.88"/>
+
+    <!-- ■ 中間角ティックマーク（30/90/150/210/270/330°, r=51→58） -->
     <!-- 30°  cos=0.866 sin=0.5 -->
-    <line x1="150.0" y1="182.0" x2="156.1" y2="185.5"
-          stroke="#d6a451" stroke-width="0.55" opacity="0.36"/>
+    <line x1="149.2" y1="177.1" x2="155.3" y2="180.6"
+          stroke="#d4a843" stroke-width="0.5" opacity="0.30"/>
     <!-- 90° -->
-    <line x1="105"   y1="208"   x2="105"   y2="215"
-          stroke="#d6a451" stroke-width="0.55" opacity="0.36"/>
-    <!-- 150°  cos=-0.866 sin=0.5 -->
-    <line x1="60.0"  y1="182.0" x2="53.9"  y2="185.5"
-          stroke="#d6a451" stroke-width="0.55" opacity="0.36"/>
-    <!-- 210°  cos=-0.866 sin=-0.5 -->
-    <line x1="60.0"  y1="130.0" x2="53.9"  y2="126.5"
-          stroke="#d6a451" stroke-width="0.55" opacity="0.36"/>
+    <line x1="105"   y1="202.5" x2="105"   y2="209.5"
+          stroke="#d4a843" stroke-width="0.5" opacity="0.30"/>
+    <!-- 150° -->
+    <line x1="60.8"  y1="177.1" x2="54.7"  y2="180.6"
+          stroke="#d4a843" stroke-width="0.5" opacity="0.30"/>
+    <!-- 210° -->
+    <line x1="60.8"  y1="125.9" x2="54.7"  y2="122.4"
+          stroke="#d4a843" stroke-width="0.5" opacity="0.30"/>
     <!-- 270° -->
-    <line x1="105"   y1="104"   x2="105"   y2="97"
-          stroke="#d6a451" stroke-width="0.55" opacity="0.36"/>
-    <!-- 330°  cos=0.866 sin=-0.5 -->
-    <line x1="150.0" y1="130.0" x2="156.1" y2="126.5"
-          stroke="#d6a451" stroke-width="0.55" opacity="0.36"/>
+    <line x1="105"   y1="100.5" x2="105"   y2="93.5"
+          stroke="#d4a843" stroke-width="0.5" opacity="0.30"/>
+    <!-- 330° -->
+    <line x1="149.2" y1="125.9" x2="155.3" y2="122.4"
+          stroke="#d4a843" stroke-width="0.5" opacity="0.30"/>
 
-    <!-- ■ 端点ドット (r=65, バブル到達点を示す) -->
-    <!-- 0°   (170,156) -->
-    <circle cx="170"   cy="156"   r="2.5" fill="#d6a451" opacity="0.90"/>
-    <!-- 60°  (105+32.5=137.5, 156+56.3=212.3) -->
-    <circle cx="137.5" cy="212.3" r="2.5" fill="#d6a451" opacity="0.90"/>
-    <!-- 120° (72.5, 212.3) -->
-    <circle cx="72.5"  cy="212.3" r="2.5" fill="#d6a451" opacity="0.90"/>
-    <!-- 180° (40, 156) -->
-    <circle cx="40"    cy="156"   r="2.5" fill="#d6a451" opacity="0.90"/>
-    <!-- 240° (72.5, 99.7) -->
-    <circle cx="72.5"  cy="99.7"  r="2.5" fill="#d6a451" opacity="0.90"/>
-    <!-- 300° (137.5, 99.7) -->
-    <circle cx="137.5" cy="99.7"  r="2.5" fill="#d6a451" opacity="0.90"/>
+    <!-- ■ バブル到達点ドット（r=65mm） -->
+    <!-- 0°   (170, 151.5) -->
+    <circle cx="170"   cy="151.5" r="2.6" fill="#d4a843" opacity="0.88"/>
+    <!-- 60°  (105+32.5=137.5, 151.5+56.3=207.8) -->
+    <circle cx="137.5" cy="207.8" r="2.6" fill="#d4a843" opacity="0.88"/>
+    <!-- 120° -->
+    <circle cx="72.5"  cy="207.8" r="2.6" fill="#d4a843" opacity="0.88"/>
+    <!-- 180° -->
+    <circle cx="40"    cy="151.5" r="2.6" fill="#d4a843" opacity="0.88"/>
+    <!-- 240° (105-32.5=72.5, 151.5-56.3=95.2) -->
+    <circle cx="72.5"  cy="95.2"  r="2.6" fill="#d4a843" opacity="0.88"/>
+    <!-- 300° -->
+    <circle cx="137.5" cy="95.2"  r="2.6" fill="#d4a843" opacity="0.88"/>
 
+    <!-- ■ 外側ヒント小ドット（r=94, 各方向） -->
+    <!-- 0°   (199, 151.5) ≒ 端: 省略 -->
+    <!-- 90°  (105, 245.5) -->
+    <circle cx="105"   cy="245.5" r="1.5" fill="#d4a843" opacity="0.20"/>
+    <!-- 270° (105, 57.5) -->
+    <circle cx="105"   cy="57.5"  r="1.5" fill="#d4a843" opacity="0.20"/>
   </svg>
 
-  <!-- ヘッダー -->
-  <div class="hdr">
-    <div class="hdr-badge">TEZU Intelligence &nbsp;|&nbsp; AI 業務効率化</div>
-    <div class="hdr-copy">忙しいのに儲からない理由、<span class="acc">分かりますか？</span></div>
+  <!-- ────────────────────────────── 上部テキスト -->
+  <div class="top-block">
+    <div class="co-badge">TEZU Intelligence &nbsp; AI 業務効率化</div>
+    <div class="main-catch">
+      忙しいのに儲からない理由、<span class="hl">分かりますか？</span>
+    </div>
   </div>
 
-  <!-- QR上コピー -->
-  <div class="qr-copy">
-    <div class="qr-copy-en">SCAN &amp; DIAGNOSE IN 30 SECONDS</div>
-    <div class="qr-copy-ja">30秒で、あなたの<em>「無駄な時間」</em>を診断</div>
+  <!-- ────────────────────────────── QR上コピー -->
+  <div class="sub-copy">
+    <div class="sub-copy-en">SCAN &amp; DIAGNOSE · 30 SECONDS</div>
+    <div class="sub-copy-ja">
+      30秒で、あなたの<em>「無駄な時間」</em>を診断
+    </div>
   </div>
 
-  <!-- QRグロー（背景の光） -->
+  <!-- ────────────────────────────── QRグロー -->
   <div class="qr-glow"></div>
 
-  <!--
-    QR コード（絶対的主役）
-    ──────────────────────────────────────────
-    差し替え方: src="" の値を任意の画像パスに変更するだけ
-    例） src="qr_code.png"  /  src="data:image/png;base64,..."
-    ──────────────────────────────────────────
-  -->
-  <div class="qr-wrap">
-    <div class="qr-scan">▶ &nbsp; SCAN ME &nbsp; ◀</div>
-    <div class="qr-frame">
+  <!-- ────────────────────────────── QRコード（主役）
+       ★ src を差し替えるだけで別の QR に変更可能 ★       -->
+  <div class="qr-block">
+    <div class="qr-label">▶ &nbsp; SCAN ME &nbsp; ◀</div>
+    <div class="qr-card">
       <img src="【QRcode】TEZUIntelligence.png" alt="AI業務診断 QRコード">
     </div>
   </div>
 
-  <!-- AI導入（QR下の大訴求） -->
-  <div class="ai-intro">
-    <div class="ai-intro-main"><span class="gold">AI</span>導入</div>
-    <span class="ai-intro-sub">登録不要　｜　完全無料</span>
+  <!-- ────────────────────────────── AI導入 -->
+  <div class="ai-cta">
+    <div class="ai-cta-main"><span class="gold">AI</span>導入</div>
+    <span class="ai-cta-sub">登録不要　｜　完全無料</span>
   </div>
 
   <!--
-  ════════════════════════════════════════════
-  放射状バブル 6個  @  r=68mm
-  QR中心(105, 156)mm → 各位置 (%, %)
-   0°   右:   left=82.4%, top=52.5%
-   60°  右下: left=66.2%, top=72.4%
-  120°  左下: left=33.8%, top=72.4%
-  180°  左:   left=17.6%, top=52.5%
-  240°  左上: left=33.8%, top=32.7%
-  300°  右上: left=66.2%, top=32.7%
-  ════════════════════════════════════════════
+  ════════════════════════════════════════════════
+  放射状バブル 6個
+  QR中心 (105, 151.5)mm, R=68mm, 60°等分
+  各 top/left は % で配置（transform:translate(-50%,-50%) で中心合わせ）
+
+    0°  右    left=82.4%, top=51.0%   x=(105+68)=173  y=151.5
+   60°  右下  left=66.2%, top=70.8%   x=139, y=210.4
+  120°  左下  left=33.8%, top=70.8%   x=71,  y=210.4
+  180°  左    left=17.6%, top=51.0%   x=37,  y=151.5
+  240°  左上  left=33.8%, top=31.2%   x=71,  y=92.6
+  300°  右上  left=66.2%, top=31.2%   x=139, y=92.6
+  ════════════════════════════════════════════════
   -->
 
-  <!-- 0° 右 ── 集客の手間 -->
-  <div class="bbl" style="left:82.4%;top:52.5%">
-    <div class="bbl-icon">📢</div>
-    <div class="bbl-lbl">集客の手間</div>
-    <div class="bbl-sub">集客導線を<br>自動化！</div>
+  <!-- 0° 右 ─ 集客の手間 -->
+  <div class="bbl" style="left:82.4%; top:51.0%">
+    <div class="bbl-ic">📢</div>
+    <div class="bbl-tx">集客の手間</div>
+    <div class="bbl-st">集客導線を<br>自動化！</div>
   </div>
 
-  <!-- 60° 右下 ── 顧客管理 -->
-  <div class="bbl" style="left:66.2%;top:72.4%">
-    <div class="bbl-icon">👥</div>
-    <div class="bbl-lbl">顧客管理</div>
-    <div class="bbl-sub">顧客データを<br>一元管理！</div>
+  <!-- 60° 右下 ─ 顧客管理 -->
+  <div class="bbl" style="left:66.2%; top:70.8%">
+    <div class="bbl-ic">👥</div>
+    <div class="bbl-tx">顧客管理</div>
+    <div class="bbl-st">顧客データを<br>一元管理！</div>
   </div>
 
-  <!-- 120° 左下 ── 作業削減 -->
-  <div class="bbl" style="left:33.8%;top:72.4%">
-    <div class="bbl-icon">⚡</div>
-    <div class="bbl-lbl">作業削減</div>
-    <div class="bbl-sub">ムダな作業を<br>大幅カット！</div>
+  <!-- 120° 左下 ─ 作業削減 -->
+  <div class="bbl" style="left:33.8%; top:70.8%">
+    <div class="bbl-ic">⚡</div>
+    <div class="bbl-tx">作業削減</div>
+    <div class="bbl-st">ムダな作業を<br>大幅カット！</div>
   </div>
 
-  <!-- 180° 左 ── 返信の手間 -->
-  <div class="bbl" style="left:17.6%;top:52.5%">
-    <div class="bbl-icon">💬</div>
-    <div class="bbl-lbl">返信の手間</div>
-    <div class="bbl-sub">自動返信で<br>即対応！</div>
+  <!-- 180° 左 ─ 返信の手間 -->
+  <div class="bbl" style="left:17.6%; top:51.0%">
+    <div class="bbl-ic">💬</div>
+    <div class="bbl-tx">返信の手間</div>
+    <div class="bbl-st">自動返信で<br>即対応！</div>
   </div>
 
-  <!-- 240° 左上 ── 予約対応 -->
-  <div class="bbl" style="left:33.8%;top:32.7%">
-    <div class="bbl-icon">📅</div>
-    <div class="bbl-lbl">予約対応</div>
-    <div class="bbl-sub">自動化で<br>時間を削減！</div>
+  <!-- 240° 左上 ─ 予約対応 -->
+  <div class="bbl" style="left:33.8%; top:31.2%">
+    <div class="bbl-ic">📅</div>
+    <div class="bbl-tx">予約対応</div>
+    <div class="bbl-st">自動化で<br>時間を削減！</div>
   </div>
 
-  <!-- 300° 右上 ── 投稿の手間 -->
-  <div class="bbl" style="left:66.2%;top:32.7%">
-    <div class="bbl-icon">📱</div>
-    <div class="bbl-lbl">投稿の手間</div>
-    <div class="bbl-sub">SNS投稿を<br>自動化！</div>
+  <!-- 300° 右上 ─ 投稿の手間 -->
+  <div class="bbl" style="left:66.2%; top:31.2%">
+    <div class="bbl-ic">📱</div>
+    <div class="bbl-tx">投稿の手間</div>
+    <div class="bbl-st">SNS投稿を<br>自動化！</div>
   </div>
 
-  <!-- CTA ボタン -->
-  <div class="cta">
-    <span class="cta-icon">📲</span>
+  <!-- ────────────────────────────── CTAボタン -->
+  <div class="btn-cta">
+    <span class="btn-cta-ic">📲</span>
     QRを読み取って今すぐ診断 →
   </div>
 
-  <!-- フッター -->
+  <!-- ────────────────────────────── フッター -->
   <div class="footer">TEZU Intelligence Inc.</div>
 
-</div>
+</div><!-- /.wrap -->
 </body>
 </html>
