@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>TEZU Intelligence | AI業務診断</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&family=Inter:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 
 /* ══ 印刷設定 ════════════════════════════ */
@@ -110,8 +111,8 @@ body {
 /* ══ QRコード（絶対的主役） ══════════════ */
 /*
   QR中心: left:50%, top:49%  = (105mm, 145.5mm)
-  ★ QR画像ファイル名: qr.png（HTMLと同じフォルダ）
-  ★ 差し替えは src="qr.png" のみ変更
+  ★ QRコードはJavaScriptで自動生成（ファイル不要）
+  ★ URLはbody末尾の var QR_URL で変更
 */
 .qr-wrap {
   position: absolute; left: 50%; top: 49%;
@@ -140,12 +141,16 @@ body {
     0 0  260px 0px   rgba(212,168,67,.18),
     0 0  360px 0px   rgba(212,168,67,.08);
 }
-.qr-card img {
-  display: block;
-  width: 80mm; height: 80mm;
+/* QRコード生成領域 */
+#qrcode {
+  width: 302px; height: 302px; /* 80mm @ 96dpi */
   border-radius: 6px;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+#qrcode img, #qrcode canvas {
+  width: 302px !important; height: 302px !important;
+  border-radius: 6px;
 }
 
 /* ══ AI導入（バブル間・三角構図） ══════ */
@@ -380,14 +385,15 @@ body {
   <!--
     ════════════════════════════════════════════════
     QR コード ── 絶対的主役
-    ★ ファイル名: qr.png（HTML と同フォルダに配置）
-    ★ 差し替えは src="qr.png" のパスのみ変更
+    ★ JavaScriptで自動生成（ファイル不要・確実表示）
+    ★ URLはbody末尾の var QR_URL で変更可能
     ════════════════════════════════════════════════
   -->
   <div class="qr-wrap">
     <div class="qr-scan">▶ &nbsp; SCAN ME &nbsp; ◀</div>
     <div class="qr-card">
-      <img src="qr.png" alt="AI業務診断 QRコード">
+      <!-- QRコード: JavaScriptで自動生成 → ファイル不要で確実表示 -->
+      <div id="qrcode"></div>
     </div>
   </div>
 
@@ -466,5 +472,19 @@ body {
   <div class="foot">TEZU Intelligence Inc.</div>
 
 </div>
+
+<script>
+/* ★ QRコードのURLはここを変更するだけ ★ */
+var QR_URL = "https://line.me/ti/p/itU8jz37Ut";
+
+new QRCode(document.getElementById("qrcode"), {
+  text: QR_URL,
+  width: 302,
+  height: 302,
+  colorDark:  "#000000",
+  colorLight: "#ffffff",
+  correctLevel: QRCode.CorrectLevel.H
+});
+</script>
 </body>
 </html>
