@@ -16,9 +16,10 @@
 
 :root {
   --g:  #d4a843;  /* ゴールド */
-  --g2: #f2c65a;  /* ライト */
-  --g3: #8c6818;  /* ダーク */
-  --bk: #070707;  /* 背景 */
+  --g2: #ffe680;  /* ライト（より明るく） */
+  --g3: #7a5510;  /* ダーク */
+  --g4: #fff0a0;  /* ハイライト（最明） */
+  --bk: #050505;  /* 背景（より深い黒） */
 }
 
 html { background: #1a1a1a; }
@@ -36,11 +37,18 @@ body {
 
 /* ── ゴールドライン上下 ── */
 .gl {
-  position: absolute; left: 0; right: 0; height: 5px; z-index: 40;
+  position: absolute; left: 0; right: 0; height: 6px; z-index: 40;
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--g3) 8%, var(--g) 25%, var(--g2) 50%,
-    var(--g) 75%, var(--g3) 92%, transparent 100%);
+    var(--g3) 5%,
+    var(--g)  18%,
+    var(--g2) 38%,
+    var(--g4) 50%,
+    var(--g2) 62%,
+    var(--g)  82%,
+    var(--g3) 95%,
+    transparent 100%);
+  box-shadow: 0 0 12px rgba(255,224,80,.80), 0 0 30px rgba(212,168,67,.45);
 }
 .gl-t { top: 0; }
 .gl-b { bottom: 0; }
@@ -78,7 +86,13 @@ body {
   font-size: 21px; font-weight: 900;
   color: #fff; line-height: 1.28; letter-spacing: -.3px;
 }
-.hdr-main .hl { color: var(--g); }
+.hdr-main .hl {
+  color: var(--g2);
+  text-shadow:
+    0 0 8px rgba(255,230,100,1),
+    0 0 20px rgba(212,168,67,.9),
+    0 0 45px rgba(212,168,67,.5);
+}
 
 /* ── QR上コピー ── */
 .sub {
@@ -90,20 +104,24 @@ body {
   color: #fff; line-height: 1.32; letter-spacing: -.2px;
 }
 .sub-ja em {
-  font-style: normal; color: var(--g);
-  border-bottom: 2px solid rgba(212,168,67,.7); padding-bottom: 1px;
+  font-style: normal; color: var(--g2);
+  border-bottom: 2px solid rgba(255,230,100,.8); padding-bottom: 1px;
+  text-shadow:
+    0 0 6px rgba(255,230,100,1),
+    0 0 18px rgba(212,168,67,.8);
 }
 
-/* ══ QRグロー（背景光） ══════════════════ */
+/* ══ QRグロー（背景光・強化版） ═══════════ */
 .qr-glow {
   position: absolute; left: 50%; top: 49%;
   transform: translate(-50%,-50%);
-  width: 148mm; height: 148mm; border-radius: 50%;
+  width: 160mm; height: 160mm; border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(212,168,67,.42) 0%,
-    rgba(212,168,67,.18) 28%,
-    rgba(212,168,67,.06) 50%,
-    transparent 68%);
+    rgba(255,230,100,.55) 0%,
+    rgba(212,168,67,.32)  22%,
+    rgba(212,168,67,.14)  44%,
+    rgba(212,168,67,.05)  60%,
+    transparent 72%);
   pointer-events: none; z-index: 3;
 }
 
@@ -157,20 +175,21 @@ body {
 .ai-text { display: block; font-size: 0; line-height: 1; }
 .ai-ai {
   font-size: 46px; font-weight: 900;
-  color: var(--g); letter-spacing: 4px;
+  color: var(--g2); letter-spacing: 4px;
   text-shadow:
-    0 0 12px rgba(212,168,67,1),
-    0 0 30px rgba(212,168,67,.95),
-    0 0 70px rgba(212,168,67,.65),
-    0 0 140px rgba(212,168,67,.32);
+    0 0  6px rgba(255,250,180,1),
+    0 0 16px rgba(255,220,60,1),
+    0 0 36px rgba(212,168,67,.98),
+    0 0 80px rgba(212,168,67,.70),
+    0 0 150px rgba(212,168,67,.35);
 }
 .ai-nyu {
   font-size: 38px; font-weight: 900;
   color: #fff; letter-spacing: 6px;
   text-shadow:
-    0 0 10px rgba(212,168,67,.65),
-    0 0 28px rgba(212,168,67,.38),
-    0 0 60px rgba(212,168,67,.18);
+    0 0  6px rgba(255,240,120,.90),
+    0 0 16px rgba(212,168,67,.75),
+    0 0 38px rgba(212,168,67,.45);
 }
 .ai-sub {
   display: block; margin-top: 7px;
@@ -194,36 +213,57 @@ body {
   position: absolute;
   transform: translate(-50%,-50%);
   z-index: 15;
-  width: 36mm; height: 36mm; border-radius: 50%;
+  width: 44mm; height: 44mm; border-radius: 50%;
+  /* 金箔風: 左上ハイライト + 深い黒 */
   background:
-    radial-gradient(circle at 38% 28%,
-      rgba(62,47,12,.99) 0%,
-      rgba(28,20,4,.99)  45%,
-      rgba(7,5,1,1)      100%);
-  border: 2.5px solid rgba(212,168,67,.82);
+    radial-gradient(circle at 32% 22%,
+      rgba(255,230,100,.22) 0%,
+      rgba(90,68,16,.0)    28%,
+      transparent          40%),
+    radial-gradient(circle at 50% 50%,
+      rgba(75,56,13,1)  0%,
+      rgba(38,28,5,1)   50%,
+      rgba(8,6,1,1)     100%);
+  /* 3重ボーダー: 外光 → メイン金縁 → 内縁 */
+  border: 3px solid rgba(255,224,80,.92);
+  outline: 1px solid rgba(212,168,67,.35);
   box-shadow:
-    0 0   0px  1.5px rgba(212,168,67,.42),
-    0 0  16px  0px   rgba(212,168,67,1),
-    0 0  36px  0px   rgba(212,168,67,.78),
-    0 0  72px  0px   rgba(212,168,67,.46),
-    0 0  120px 0px   rgba(212,168,67,.22),
-    inset 0 0  22px  rgba(212,168,67,.18);
+    0 0   0px  2px   rgba(255,240,130,.60),  /* 最内光縁 */
+    0 0  18px  0px   rgba(255,220,60,1),      /* 近強グロー */
+    0 0  40px  0px   rgba(212,168,67,.92),    /* 中グロー */
+    0 0  85px  0px   rgba(212,168,67,.60),    /* 広グロー */
+    0 0  140px 0px   rgba(212,168,67,.32),    /* 超広 */
+    0 0  200px 0px   rgba(212,168,67,.14),    /* 環境光 */
+    inset 0 0  10px  rgba(255,230,100,.30),   /* 内面発光 */
+    inset 0 -8px 18px rgba(100,70,10,.60);    /* 下部影 */
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; gap: 3.5px;
-  padding: 0 2.5mm;
+  text-align: center; gap: 4px;
+  padding: 0 3mm;
 }
 .bbl-ic {
-  font-size: 21px; line-height: 1;
-  filter: drop-shadow(0 0 9px rgba(212,168,67,.90));
+  font-size: 24px; line-height: 1;
+  filter:
+    drop-shadow(0 0 6px rgba(255,230,60,1))
+    drop-shadow(0 0 16px rgba(212,168,67,.95))
+    drop-shadow(0 0 30px rgba(212,168,67,.55));
 }
 .bbl-tx {
-  font-size: 12.5px; font-weight: 900;
-  color: #fff; letter-spacing: .2px; line-height: 1.15;
+  font-size: 15.5px; font-weight: 900;
+  color: #fff;
+  letter-spacing: .3px; line-height: 1.1;
+  text-shadow:
+    0 0  5px rgba(255,240,120,.95),
+    0 0 14px rgba(212,168,67,.85),
+    0 0 28px rgba(212,168,67,.45);
 }
 .bbl-st {
-  font-size: 7px; font-weight: 700;
-  color: var(--g); letter-spacing: .1px; line-height: 1.55;
+  font-size: 9px; font-weight: 700;
+  color: var(--g2);
+  letter-spacing: .15px; line-height: 1.5;
+  text-shadow:
+    0 0 4px rgba(255,230,80,1),
+    0 0 12px rgba(212,168,67,.80);
 }
 
 /* ══ CTAボタン ═══════════════════════════ */
@@ -234,7 +274,7 @@ body {
   display: inline-flex; align-items: center; gap: 9px;
   padding: 12px 30px 12px 22px;
   background: linear-gradient(135deg,
-    var(--g3) 0%, var(--g) 28%, var(--g2) 58%, var(--g) 100%);
+    var(--g3) 0%, var(--g) 20%, var(--g2) 45%, var(--g4) 58%, var(--g2) 72%, var(--g) 100%);
   color: #1a0d00;
   font-size: 15px; font-weight: 900;
   border-radius: 50px; white-space: nowrap; letter-spacing: .5px;
@@ -288,27 +328,32 @@ body {
       <!-- 放射グラデ: QR端で明るく → 外側でフェード -->
       <radialGradient id="rg" cx="50%" cy="49%" r="36%"
           gradientUnits="userSpaceOnUse">
-        <stop offset="0%"   stop-color="#d4a843" stop-opacity="0.0"/>
-        <stop offset="32%"  stop-color="#d4a843" stop-opacity="0.92"/>
-        <stop offset="68%"  stop-color="#d4a843" stop-opacity="0.52"/>
-        <stop offset="100%" stop-color="#d4a843" stop-opacity="0.10"/>
+        <stop offset="0%"   stop-color="#ffe680" stop-opacity="0.0"/>
+        <stop offset="30%"  stop-color="#ffe680" stop-opacity="1.0"/>
+        <stop offset="55%"  stop-color="#d4a843" stop-opacity="0.75"/>
+        <stop offset="100%" stop-color="#d4a843" stop-opacity="0.12"/>
       </radialGradient>
+      <!-- ドット用グロー -->
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="1.2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
     </defs>
 
     <!-- ■ 同心円 5層（内→外でフェード） -->
     <circle cx="105" cy="145.5" r="46"
-      fill="none" stroke="rgba(212,168,67,0.34)" stroke-width="0.85"/>
+      fill="none" stroke="rgba(255,224,80,0.55)" stroke-width="1.0"/>
     <circle cx="105" cy="145.5" r="67"
-      fill="none" stroke="rgba(212,168,67,0.16)" stroke-width="0.58"
+      fill="none" stroke="rgba(212,168,67,0.22)" stroke-width="0.65"
       stroke-dasharray="2.5 4"/>
     <circle cx="105" cy="145.5" r="92"
-      fill="none" stroke="rgba(212,168,67,0.065)" stroke-width="0.45"
+      fill="none" stroke="rgba(212,168,67,0.09)" stroke-width="0.50"
       stroke-dasharray="2 5.5"/>
     <circle cx="105" cy="145.5" r="118"
-      fill="none" stroke="rgba(212,168,67,0.028)" stroke-width="0.38"
+      fill="none" stroke="rgba(212,168,67,0.040)" stroke-width="0.40"
       stroke-dasharray="1.5 8"/>
     <circle cx="105" cy="145.5" r="145"
-      fill="none" stroke="rgba(212,168,67,0.012)" stroke-width="0.30"
+      fill="none" stroke="rgba(212,168,67,0.016)" stroke-width="0.32"
       stroke-dasharray="1 11"/>
 
     <!-- ■ 6方向 放射破線 (r=47mm → r=67mm)
@@ -340,19 +385,19 @@ body {
     <line x1="128.5" y1="104.8" x2="138.5" y2="87.5"
       stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="3 2"/>
 
-    <!-- ■ バブル到達点ドット（r=70mm） -->
-    <!-- 0°   (175, 145.5) -->
-    <circle cx="175"   cy="145.5" r="3.5" fill="#d4a843" opacity="0.95"/>
-    <!-- 60°  (105+35=140, 145.5+60.6=206.1) -->
-    <circle cx="140"   cy="206.1" r="3.5" fill="#d4a843" opacity="0.95"/>
-    <!-- 120° (70, 206.1) -->
-    <circle cx="70"    cy="206.1" r="3.5" fill="#d4a843" opacity="0.95"/>
-    <!-- 180° (35, 145.5) -->
-    <circle cx="35"    cy="145.5" r="3.5" fill="#d4a843" opacity="0.95"/>
-    <!-- 240° (70, 84.9) -->
-    <circle cx="70"    cy="84.9"  r="3.5" fill="#d4a843" opacity="0.95"/>
-    <!-- 300° (140, 84.9) -->
-    <circle cx="140"   cy="84.9"  r="3.5" fill="#d4a843" opacity="0.95"/>
+    <!-- ■ バブル到達点ドット（r=70mm）輝度強化 -->
+    <!-- 0°   -->
+    <circle cx="175"   cy="145.5" r="4.0" fill="#ffe680" filter="url(#glow)"/>
+    <!-- 60°  -->
+    <circle cx="140"   cy="206.1" r="4.0" fill="#ffe680" filter="url(#glow)"/>
+    <!-- 120° -->
+    <circle cx="70"    cy="206.1" r="4.0" fill="#ffe680" filter="url(#glow)"/>
+    <!-- 180° -->
+    <circle cx="35"    cy="145.5" r="4.0" fill="#ffe680" filter="url(#glow)"/>
+    <!-- 240° -->
+    <circle cx="70"    cy="84.9"  r="4.0" fill="#ffe680" filter="url(#glow)"/>
+    <!-- 300° -->
+    <circle cx="140"   cy="84.9"  r="4.0" fill="#ffe680" filter="url(#glow)"/>
   </svg>
 
   <!-- ヘッダー -->
