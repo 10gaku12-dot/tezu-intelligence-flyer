@@ -228,7 +228,7 @@ body {
   transform: translate(-50%,-50%);
   z-index: 15;
   width: 60mm; height: 60mm; border-radius: 50%;
-  overflow: visible; /* メインテキストが1行で円外にはみ出すことを許容 */
+  overflow: hidden; /* テキストを円内にクリップ */
   background:
     radial-gradient(circle at 32% 22%,
       rgba(255,230,100,.20) 0%,
@@ -252,7 +252,7 @@ body {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center; gap: 2px;
-  padding: 0;
+  padding: 0 5mm; /* 左右余白で文字が枠に当たらないよう調整 */
 }
 .bbl-ic {
   font-size: 18px; line-height: 1; /* アイコン：視認性補助 */
@@ -260,12 +260,12 @@ body {
     drop-shadow(0 0 6px rgba(255,230,60,1))
     drop-shadow(0 0 14px rgba(212,168,67,.85));
 }
-/* メインテキスト：2.5倍（95px）・1行・黒縁+金グロー */
+/* メインテキスト：円内に収まる最大サイズ・1行・黒縁+金グロー */
 .bbl-tx {
-  font-size: 24px; font-weight: 900;
+  font-size: 34px; font-weight: 900;
   color: #ffffff;
   white-space: nowrap;       /* 1行強制 */
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   line-height: 1;
   text-shadow:
     /* 黒縁（輪郭をくっきり） */
