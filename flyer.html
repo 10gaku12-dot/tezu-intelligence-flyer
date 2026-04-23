@@ -241,29 +241,29 @@ body {
     inset 0 -8px 18px rgba(100,70,10,.60);    /* 下部影 */
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; gap: 4px;
+  text-align: center; gap: 2px;
   padding: 0 3mm;
 }
 .bbl-ic {
-  font-size: 24px; line-height: 1;
+  font-size: 18px; line-height: 1;           /* アイコン縮小でテキストに余白 */
   filter:
     drop-shadow(0 0 6px rgba(255,230,60,1))
     drop-shadow(0 0 16px rgba(212,168,67,.95))
     drop-shadow(0 0 30px rgba(212,168,67,.55));
 }
 .bbl-tx {
-  font-size: 15.5px; font-weight: 900;
+  font-size: 38px; font-weight: 900;         /* 15.5→38px（2.5倍） */
   color: #fff;
-  letter-spacing: .3px; line-height: 1.1;
+  letter-spacing: 0px; line-height: 1.05;
   text-shadow:
     0 0  5px rgba(255,240,120,.95),
     0 0 14px rgba(212,168,67,.85),
     0 0 28px rgba(212,168,67,.45);
 }
 .bbl-st {
-  font-size: 10px; font-weight: 900;          /* ④ 太く・大きく */
+  font-size: 8px; font-weight: 900;
   color: var(--g2);
-  letter-spacing: .15px; line-height: 1.5;
+  letter-spacing: .1px; line-height: 1.45;
   text-shadow:
     0 0 4px rgba(255,230,80,1),
     0 0 12px rgba(212,168,67,.80);
