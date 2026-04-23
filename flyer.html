@@ -156,20 +156,23 @@ body {
 /* ══ 放射状アイテム ════════════════════════════ */
 .it {
   position: absolute; transform: translate(-50%, -50%);
-  text-align: center; z-index: 15; width: 28mm;
-  opacity: .72;  /* QRより控えめ */
+  text-align: center; z-index: 15; width: 31mm;
+  opacity: .80;  /* パッと読めるが QRより控えめ */
 }
 .it-icon {
-  font-size: 22px; line-height: 1; margin-bottom: 4px;
-  filter: drop-shadow(0 0 4px rgba(214,164,81,.4));
+  font-size: 20px; line-height: 1; margin-bottom: 5px;
+  filter: drop-shadow(0 0 5px rgba(214,164,81,.45));
 }
+/* メインラベル: 日本語を主役に大きく・太く */
 .it-lbl {
-  font-size: 10.5px; font-weight: 900; color: #fff;
-  letter-spacing: .4px; margin-bottom: 2px;
+  font-size: 13px; font-weight: 900; color: #fff;
+  line-height: 1.25; letter-spacing: .3px;
 }
+/* 英語サブ: 極小・非常に薄くして補助のみ */
 .it-en {
-  font-size: 5.5px; font-weight: 700; color: var(--g);
-  letter-spacing: 2.5px;
+  display: block; font-size: 5px; font-weight: 700;
+  color: rgba(214,164,81,.45); letter-spacing: 2px;
+  margin-top: 3px;
   font-family: 'Inter','Arial',sans-serif;
 }
 
@@ -334,54 +337,54 @@ body {
   </div>
 
   <!--
-    放射状アイテム 6個 @ r=78mm
-    ─ 0°   右:       (183, 162)   → left=87.1%, top=54.5%
-    ─ 60°  右下:     (144, 229.6) → left=68.6%, top=77.3%
-    ─ 120° 左下:     (66,  229.6) → left=31.4%, top=77.3%
-    ─ 180° 左:       (27,  162)   → left=12.9%, top=54.5%
-    ─ 240° 左上:     (66,  94.4)  → left=31.4%, top=31.8%
-    ─ 300° 右上:     (144, 94.4)  → left=68.6%, top=31.8%
+    放射状アイテム 6個 @ r=78mm  ─  文言: AIが削減する「手間・面倒」を直感表現
+    ─ 0°   右:   left=87.1%, top=54.5%
+    ─ 60°  右下: left=68.6%, top=77.3%
+    ─ 120° 左下: left=31.4%, top=77.3%
+    ─ 180° 左:   left=12.9%, top=54.5%
+    ─ 240° 左上: left=31.4%, top=31.8%
+    ─ 300° 右上: left=68.6%, top=31.8%
   -->
-  <!-- 0° 集客 -->
+  <!-- 0° 右：集客の手間 -->
   <div class="it" style="left:87.1%;top:54.5%">
     <div class="it-icon">📢</div>
-    <div class="it-lbl">集客</div>
+    <div class="it-lbl">集客の手間</div>
     <div class="it-en">MARKETING</div>
   </div>
 
-  <!-- 60° 顧客管理 -->
+  <!-- 60° 右下：顧客管理 -->
   <div class="it" style="left:68.6%;top:77.3%">
     <div class="it-icon">👥</div>
     <div class="it-lbl">顧客管理</div>
     <div class="it-en">CUSTOMER</div>
   </div>
 
-  <!-- 120° 業務時短 -->
+  <!-- 120° 左下：作業削減 -->
   <div class="it" style="left:31.4%;top:77.3%">
-    <div class="it-icon">⏱</div>
-    <div class="it-lbl">業務時短</div>
-    <div class="it-en">TIME SAVE</div>
+    <div class="it-icon">⚡</div>
+    <div class="it-lbl">作業削減</div>
+    <div class="it-en">SAVE TIME</div>
   </div>
 
-  <!-- 180° 自動返信 -->
+  <!-- 180° 左：返信の手間 -->
   <div class="it" style="left:12.9%;top:54.5%">
-    <div class="it-icon">🤖</div>
-    <div class="it-lbl">自動返信</div>
+    <div class="it-icon">💬</div>
+    <div class="it-lbl">返信の手間</div>
     <div class="it-en">AUTO REPLY</div>
   </div>
 
-  <!-- 240° 予約管理 -->
+  <!-- 240° 左上：予約対応 -->
   <div class="it" style="left:31.4%;top:31.8%">
     <div class="it-icon">📅</div>
-    <div class="it-lbl">予約管理</div>
+    <div class="it-lbl">予約対応</div>
     <div class="it-en">SCHEDULE</div>
   </div>
 
-  <!-- 300° 投稿自動化 -->
+  <!-- 300° 右上：投稿の手間 -->
   <div class="it" style="left:68.6%;top:31.8%">
     <div class="it-icon">📱</div>
-    <div class="it-lbl">投稿自動化</div>
-    <div class="it-en">SNS AUTO</div>
+    <div class="it-lbl">投稿の手間</div>
+    <div class="it-en">SNS POST</div>
   </div>
 
   <!-- CTAボタン -->
