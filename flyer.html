@@ -68,7 +68,7 @@ body {
 .svgl {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
-  pointer-events: none; z-index: 2;
+  pointer-events: none; z-index: 5; /* qr-glow(z=3)より上・バブル(z=15)より下 */
 }
 
 /* ══ ヘッダー ═══════════════════════════ */
@@ -361,7 +361,14 @@ body {
   -->
   <svg class="svgl" viewBox="0 0 210 297" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <!-- 放射グラデ: QR端で明るく → 外側でフェード -->
+      <!--
+        ══════════════════════════════════════════
+        グラデーション・フィルター定義
+        QR中心: (105, 145.5)mm  バブル半径 R=72mm
+        ══════════════════════════════════════════
+      -->
+
+      <!-- ① 同心円用グラデ（既存） -->
       <radialGradient id="rg" cx="50%" cy="49%" r="36%"
           gradientUnits="userSpaceOnUse">
         <stop offset="0%"   stop-color="#ffe680" stop-opacity="0.0"/>
@@ -369,71 +376,178 @@ body {
         <stop offset="55%"  stop-color="#d4a843" stop-opacity="0.75"/>
         <stop offset="100%" stop-color="#d4a843" stop-opacity="0.12"/>
       </radialGradient>
-      <!-- ドット用グロー -->
+
+      <!--
+        ② 接続コア線グラデ
+           中心(r=0)→透明、QR端(r≈47mm=65%)→明るく発光、ノード端(r=72mm=100%)→やや暗め
+           「QRから光が流れ出す」方向感を表現
+      -->
+      <radialGradient id="lineRG" cx="105" cy="145.5" r="72"
+          gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#ffe840" stop-opacity="0.0"/>
+        <stop offset="58%"  stop-color="#ffe840" stop-opacity="0.0"/>  <!-- QR内は透明 -->
+        <stop offset="66%"  stop-color="#fffbe0" stop-opacity="0.95"/> <!-- QR端から明輝 -->
+        <stop offset="80%"  stop-color="#ffe840" stop-opacity="0.88"/>
+        <stop offset="92%"  stop-color="#d4a843" stop-opacity="0.65"/>
+        <stop offset="100%" stop-color="#b8891f" stop-opacity="0.20"/>
+      </radialGradient>
+
+      <!-- ③ 線グロー（コア線の発光ハロー） -->
+      <filter id="lineGlow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <!-- ④ ドットグロー（端点の発光） -->
+      <filter id="dotGlow" x="-300%" y="-300%" width="700%" height="700%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" result="blur"/>
+        <feMerge>
+          <feMergeNode in="blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+
+      <!-- ⑤ 既存dotGlow互換 -->
       <filter id="glow">
         <feGaussianBlur stdDeviation="1.2" result="blur"/>
         <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
     </defs>
 
-    <!-- ■ 同心円 5層（内→外でフェード） -->
+    <!-- ══════════════════════════════════════
+         ■ 同心円 4層（控えめに調整）
+         ══════════════════════════════════════ -->
     <circle cx="105" cy="145.5" r="46"
-      fill="none" stroke="rgba(255,224,80,0.55)" stroke-width="1.0"/>
+      fill="none" stroke="rgba(255,224,80,0.38)" stroke-width="0.8"/>
     <circle cx="105" cy="145.5" r="67"
-      fill="none" stroke="rgba(212,168,67,0.22)" stroke-width="0.65"
+      fill="none" stroke="rgba(212,168,67,0.16)" stroke-width="0.55"
       stroke-dasharray="2.5 4"/>
     <circle cx="105" cy="145.5" r="92"
-      fill="none" stroke="rgba(212,168,67,0.09)" stroke-width="0.50"
+      fill="none" stroke="rgba(212,168,67,0.07)" stroke-width="0.45"
       stroke-dasharray="2 5.5"/>
     <circle cx="105" cy="145.5" r="118"
-      fill="none" stroke="rgba(212,168,67,0.040)" stroke-width="0.40"
+      fill="none" stroke="rgba(212,168,67,0.028)" stroke-width="0.35"
       stroke-dasharray="1.5 8"/>
-    <circle cx="105" cy="145.5" r="145"
-      fill="none" stroke="rgba(212,168,67,0.016)" stroke-width="0.32"
-      stroke-dasharray="1 11"/>
 
-    <!-- ■ 6方向 放射破線 (r=47mm → r=67mm)
-         各方向: 内端=QR枠外, 外端=バブル直前             -->
+    <!--
+      ══════════════════════════════════════════════════════
+      ■ 接続線システム（3層構造）
+        Layer 1: アンビエントグロー光線（中心→ノード全区間、薄く広い）
+        Layer 2: コア破線（r=47→r=70の可視ギャップ、グラデ+グローフィルター）
+        Layer 3: 発光ドット（QR端・ノード端）
 
-    <!-- 0° 右  cos=1, sin=0 -->
-    <line x1="152" y1="145.5" x2="172" y2="145.5"
-      stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="3 2"/>
+        QR中心 (105, 145.5)  R=72mm
+         0° 右:    cos=1,     sin=0      → (177,   145.5)
+        60° 右下:  cos=0.5,   sin=0.866  → (141,   207.9)
+       120° 左下:  cos=-0.5,  sin=0.866  → ( 69,   207.9)
+       180° 左:    cos=-1,    sin=0      → ( 33,   145.5)
+       240° 左上:  cos=-0.5,  sin=-0.866 → ( 69,    83.1)
+       300° 右上:  cos=0.5,   sin=-0.866 → (141,    83.1)
 
-    <!-- 60° 右下  cos=0.5, sin=0.866
-         r47: (105+23.5, 145.5+40.7)=(128.5, 186.2)
-         r67: (105+33.5, 145.5+58.0)=(138.5, 203.5) -->
-    <line x1="128.5" y1="186.2" x2="138.5" y2="203.5"
-      stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="3 2"/>
+        r=47mm端点:
+         0°  (152,   145.5)
+        60°  (128.5, 186.2)
+       120°   (81.5, 186.2)
+       180°   (58,   145.5)
+       240°   (81.5, 104.8)
+       300°  (128.5, 104.8)
 
-    <!-- 120° 左下  cos=-0.5, sin=0.866 -->
-    <line x1="81.5" y1="186.2" x2="71.5" y2="203.5"
-      stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="3 2"/>
+        r=70mm端点:
+         0°  (175,   145.5)
+        60°  (140,   206.1)
+       120°   (70,   206.1)
+       180°   (35,   145.5)
+       240°   (70,    84.9)
+       300°  (140,    84.9)
+      ══════════════════════════════════════════════════════
+    -->
 
-    <!-- 180° 左  cos=-1, sin=0 -->
-    <line x1="58" y1="145.5" x2="38" y2="145.5"
-      stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Layer 1: アンビエントグロー光線
+         中心からノード中心まで伸びる広幅・極薄の光帯
+         QRと各ノードが「同じ光源から広がる」印象を形成
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <!-- 0° 右 -->
+    <line x1="105" y1="145.5" x2="177" y2="145.5"
+      stroke="#ffe840" stroke-width="7" stroke-opacity="0.07"/>
+    <!-- 60° 右下 -->
+    <line x1="105" y1="145.5" x2="141" y2="207.9"
+      stroke="#ffe840" stroke-width="7" stroke-opacity="0.07"/>
+    <!-- 120° 左下 -->
+    <line x1="105" y1="145.5" x2="69" y2="207.9"
+      stroke="#ffe840" stroke-width="7" stroke-opacity="0.07"/>
+    <!-- 180° 左 -->
+    <line x1="105" y1="145.5" x2="33" y2="145.5"
+      stroke="#ffe840" stroke-width="7" stroke-opacity="0.07"/>
+    <!-- 240° 左上 -->
+    <line x1="105" y1="145.5" x2="69" y2="83.1"
+      stroke="#ffe840" stroke-width="7" stroke-opacity="0.07"/>
+    <!-- 300° 右上 -->
+    <line x1="105" y1="145.5" x2="141" y2="83.1"
+      stroke="#ffe840" stroke-width="7" stroke-opacity="0.07"/>
 
-    <!-- 240° 左上  cos=-0.5, sin=-0.866 -->
-    <line x1="81.5" y1="104.8" x2="71.5" y2="87.5"
-      stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Layer 2: コア破線（r=47mm → r=70mm）
+         ゴールドグラデ + 発光フィルター + ダッシュ
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <!-- 0° 右 -->
+    <line x1="152" y1="145.5" x2="175" y2="145.5"
+      stroke="url(#lineRG)" stroke-width="2.2"
+      stroke-dasharray="4.5 2.8" filter="url(#lineGlow)"/>
+    <!-- 60° 右下 -->
+    <line x1="128.5" y1="186.2" x2="140" y2="206.1"
+      stroke="url(#lineRG)" stroke-width="2.2"
+      stroke-dasharray="4.5 2.8" filter="url(#lineGlow)"/>
+    <!-- 120° 左下 -->
+    <line x1="81.5" y1="186.2" x2="70" y2="206.1"
+      stroke="url(#lineRG)" stroke-width="2.2"
+      stroke-dasharray="4.5 2.8" filter="url(#lineGlow)"/>
+    <!-- 180° 左 -->
+    <line x1="58" y1="145.5" x2="35" y2="145.5"
+      stroke="url(#lineRG)" stroke-width="2.2"
+      stroke-dasharray="4.5 2.8" filter="url(#lineGlow)"/>
+    <!-- 240° 左上 -->
+    <line x1="81.5" y1="104.8" x2="70" y2="84.9"
+      stroke="url(#lineRG)" stroke-width="2.2"
+      stroke-dasharray="4.5 2.8" filter="url(#lineGlow)"/>
+    <!-- 300° 右上 -->
+    <line x1="128.5" y1="104.8" x2="140" y2="84.9"
+      stroke="url(#lineRG)" stroke-width="2.2"
+      stroke-dasharray="4.5 2.8" filter="url(#lineGlow)"/>
 
-    <!-- 300° 右上  cos=0.5, sin=-0.866 -->
-    <line x1="128.5" y1="104.8" x2="138.5" y2="87.5"
-      stroke="url(#rg)" stroke-width="1.5" stroke-dasharray="3 2"/>
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Layer 3a: QR端ドット（r=47mm）
+         QRカードとの接触感・接続の起点を表現
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <circle cx="152"   cy="145.5" r="2.0" fill="#fffbe0" filter="url(#dotGlow)" opacity="0.92"/>
+    <circle cx="128.5" cy="186.2" r="2.0" fill="#fffbe0" filter="url(#dotGlow)" opacity="0.92"/>
+    <circle cx="81.5"  cy="186.2" r="2.0" fill="#fffbe0" filter="url(#dotGlow)" opacity="0.92"/>
+    <circle cx="58"    cy="145.5" r="2.0" fill="#fffbe0" filter="url(#dotGlow)" opacity="0.92"/>
+    <circle cx="81.5"  cy="104.8" r="2.0" fill="#fffbe0" filter="url(#dotGlow)" opacity="0.92"/>
+    <circle cx="128.5" cy="104.8" r="2.0" fill="#fffbe0" filter="url(#dotGlow)" opacity="0.92"/>
 
-    <!-- ■ バブル到達点ドット（r=70mm）輝度強化 -->
-    <!-- 0°   -->
-    <circle cx="175"   cy="145.5" r="4.0" fill="#ffe680" filter="url(#glow)"/>
-    <!-- 60°  -->
-    <circle cx="140"   cy="206.1" r="4.0" fill="#ffe680" filter="url(#glow)"/>
-    <!-- 120° -->
-    <circle cx="70"    cy="206.1" r="4.0" fill="#ffe680" filter="url(#glow)"/>
-    <!-- 180° -->
-    <circle cx="35"    cy="145.5" r="4.0" fill="#ffe680" filter="url(#glow)"/>
-    <!-- 240° -->
-    <circle cx="70"    cy="84.9"  r="4.0" fill="#ffe680" filter="url(#glow)"/>
-    <!-- 300° -->
-    <circle cx="140"   cy="84.9"  r="4.0" fill="#ffe680" filter="url(#glow)"/>
+    <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         Layer 3b: ノード端ドット（r=70mm）
+         各ノードへの「到達感」を強化
+         外側ハロー(大・薄) + 内側コア(小・明) の2重構造
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+    <!-- 外ハロー -->
+    <circle cx="175" cy="145.5" r="4.5" fill="#ffe680" filter="url(#dotGlow)" opacity="0.70"/>
+    <circle cx="140" cy="206.1" r="4.5" fill="#ffe680" filter="url(#dotGlow)" opacity="0.70"/>
+    <circle cx="70"  cy="206.1" r="4.5" fill="#ffe680" filter="url(#dotGlow)" opacity="0.70"/>
+    <circle cx="35"  cy="145.5" r="4.5" fill="#ffe680" filter="url(#dotGlow)" opacity="0.70"/>
+    <circle cx="70"  cy="84.9"  r="4.5" fill="#ffe680" filter="url(#dotGlow)" opacity="0.70"/>
+    <circle cx="140" cy="84.9"  r="4.5" fill="#ffe680" filter="url(#dotGlow)" opacity="0.70"/>
+    <!-- 内コア（明輝点） -->
+    <circle cx="175" cy="145.5" r="1.8" fill="#ffffff" opacity="0.95"/>
+    <circle cx="140" cy="206.1" r="1.8" fill="#ffffff" opacity="0.95"/>
+    <circle cx="70"  cy="206.1" r="1.8" fill="#ffffff" opacity="0.95"/>
+    <circle cx="35"  cy="145.5" r="1.8" fill="#ffffff" opacity="0.95"/>
+    <circle cx="70"  cy="84.9"  r="1.8" fill="#ffffff" opacity="0.95"/>
+    <circle cx="140" cy="84.9"  r="1.8" fill="#ffffff" opacity="0.95"/>
   </svg>
 
   <!-- ヘッダー -->
