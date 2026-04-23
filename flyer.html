@@ -227,7 +227,8 @@ body {
   position: absolute;
   transform: translate(-50%,-50%);
   z-index: 15;
-  width: 48mm; height: 48mm; border-radius: 50%;
+  width: 60mm; height: 60mm; border-radius: 50%;
+  overflow: visible; /* メインテキストが1行で円外にはみ出すことを許容 */
   background:
     radial-gradient(circle at 32% 22%,
       rgba(255,230,100,.20) 0%,
@@ -236,57 +237,60 @@ body {
       rgba(70,52,12,1) 0%,
       rgba(30,22,4,1)  55%,
       rgba(6,5,1,1)    100%);
-  /* ② 外枠ゴールド発光を強化 */
+  /* 外枠ゴールド発光 */
   border: 3.5px solid rgba(255,228,70,.98);
   outline: 1.5px solid rgba(255,200,40,.45);
   box-shadow:
-    0 0   0px   3px  rgba(255,245,120,.70),   /* 最内光縁 */
-    0 0  20px   0px  rgba(255,228,30,1),       /* 近強グロー */
-    0 0  48px   0px  rgba(212,168,67,.95),     /* 中グロー */
-    0 0  95px   0px  rgba(212,168,67,.65),     /* 広グロー */
-    0 0  160px  0px  rgba(212,168,67,.36),     /* 超広 */
-    0 0  240px  0px  rgba(212,168,67,.16),     /* 環境光 */
-    inset 0 0   12px rgba(255,230,80,.32),     /* 内面発光 */
-    inset 0 -8px 20px rgba(90,60,8,.65);      /* 下部影 */
+    0 0   0px   3px  rgba(255,245,120,.70),
+    0 0  20px   0px  rgba(255,228,30,1),
+    0 0  48px   0px  rgba(212,168,67,.95),
+    0 0  95px   0px  rgba(212,168,67,.65),
+    0 0  160px  0px  rgba(212,168,67,.36),
+    0 0  240px  0px  rgba(212,168,67,.16),
+    inset 0 0   12px rgba(255,230,80,.32),
+    inset 0 -8px 20px rgba(90,60,8,.65);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; gap: 3px;
-  padding: 0 4mm;
+  text-align: center; gap: 2px;
+  padding: 0;
 }
 .bbl-ic {
-  font-size: 13px; line-height: 1;            /* 装飾として最小化 */
+  font-size: 18px; line-height: 1; /* アイコン：視認性補助 */
   filter:
-    drop-shadow(0 0 5px rgba(255,230,60,1))
-    drop-shadow(0 0 12px rgba(212,168,67,.85));
+    drop-shadow(0 0 6px rgba(255,230,60,1))
+    drop-shadow(0 0 14px rgba(212,168,67,.85));
 }
-/* ① メインテキスト：黒縁+金グローで背景から完全に浮かせる */
+/* メインテキスト：2.5倍（95px）・1行・黒縁+金グロー */
 .bbl-tx {
-  font-size: 38px; font-weight: 900;
+  font-size: 95px; font-weight: 900;
   color: #ffffff;
-  letter-spacing: -1px; line-height: 1.08;
+  white-space: nowrap;       /* 1行強制 */
+  letter-spacing: -2px;
+  line-height: 1;
   text-shadow:
     /* 黒縁（輪郭をくっきり） */
-    -1.5px -1.5px 0 rgba(0,0,0,.92),
-     1.5px -1.5px 0 rgba(0,0,0,.92),
-    -1.5px  1.5px 0 rgba(0,0,0,.92),
-     1.5px  1.5px 0 rgba(0,0,0,.92),
-    /* ② ゴールドグロー */
-    0 0  7px rgba(255,240,100,1),
-    0 0 18px rgba(212,168,67,.90),
-    0 0 35px rgba(212,168,67,.50);
+    -2px -2px 0 rgba(0,0,0,.95),
+     2px -2px 0 rgba(0,0,0,.95),
+    -2px  2px 0 rgba(0,0,0,.95),
+     2px  2px 0 rgba(0,0,0,.95),
+    /* ゴールドグロー */
+    0 0  8px rgba(255,240,100,1),
+    0 0 22px rgba(212,168,67,.92),
+    0 0 45px rgba(212,168,67,.55);
 }
 .bbl-st {
-  font-size: 8.5px; font-weight: 900;
+  font-size: 9px; font-weight: 900;
   color: #ffe680;
-  letter-spacing: .1px; line-height: 1.45;
+  letter-spacing: .1px; line-height: 1.4;
+  white-space: nowrap; /* サブテキストも1行 */
   text-shadow:
     0 0 4px rgba(255,230,80,1),
     0 0 10px rgba(212,168,67,.75);
 }
 
-/* ① 上部2ノード：1.22倍スケール＋グロー増幅 */
+/* 上部2ノード：1.18倍スケール＋グロー増幅（60mm→約71mm） */
 .bbl-top {
-  transform: translate(-50%,-50%) scale(1.22);
+  transform: translate(-50%,-50%) scale(1.18);
   box-shadow:
     0 0   0px   4px  rgba(255,248,140,.80),
     0 0  24px   0px  rgba(255,235,30,1),
@@ -491,42 +495,42 @@ body {
   <div class="bbl" style="left:84.3%;top:49.0%">
     <div class="bbl-ic">📢</div>
     <div class="bbl-tx">集客の手間</div>
-    <div class="bbl-st">集客導線を<br>自動化！</div>
+    <div class="bbl-st">集客導線を自動化！</div>
   </div>
 
   <!-- 60° 右下 ── 顧客管理 -->
   <div class="bbl" style="left:67.1%;top:70.0%">
     <div class="bbl-ic">👥</div>
     <div class="bbl-tx">顧客管理</div>
-    <div class="bbl-st">顧客データを<br>一元管理！</div>
+    <div class="bbl-st">顧客データを一元管理！</div>
   </div>
 
   <!-- 120° 左下 ── 作業削減 -->
   <div class="bbl" style="left:32.9%;top:70.0%">
     <div class="bbl-ic">⚡</div>
     <div class="bbl-tx">作業削減</div>
-    <div class="bbl-st">ムダな作業を<br>大幅カット！</div>
+    <div class="bbl-st">ムダな作業を大幅カット！</div>
   </div>
 
   <!-- 180° 左 ── 返信の手間 -->
   <div class="bbl" style="left:15.7%;top:49.0%">
     <div class="bbl-ic">💬</div>
     <div class="bbl-tx">返信の手間</div>
-    <div class="bbl-st">自動返信で<br>即対応！</div>
+    <div class="bbl-st">自動返信で即対応！</div>
   </div>
 
   <!-- 240° 左上 ── 予約対応（① 上部ノード強化） -->
   <div class="bbl bbl-top" style="left:32.9%;top:28.0%">
     <div class="bbl-ic">📅</div>
     <div class="bbl-tx">予約対応</div>
-    <div class="bbl-st">自動化で<br>時間を削減！</div>
+    <div class="bbl-st">自動化で時間を削減！</div>
   </div>
 
   <!-- 300° 右上 ── 投稿の手間（① 上部ノード強化） -->
   <div class="bbl bbl-top" style="left:67.1%;top:28.0%">
     <div class="bbl-ic">✏️</div>
     <div class="bbl-tx">投稿の手間</div>
-    <div class="bbl-st">SNS投稿を<br>自動化！</div>
+    <div class="bbl-st">SNS投稿を自動化！</div>
   </div>
 
   <!-- CTA ボタン -->
