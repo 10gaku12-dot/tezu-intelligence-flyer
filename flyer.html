@@ -173,33 +173,38 @@ body {
   white-space: nowrap; line-height: 1;
 }
 .ai-text { display: block; font-size: 0; line-height: 1; }
-/* ② AI導入 ─ くっきり表示 */
+/* ③ AI導入 ─ 最高視認性・サブ主役 */
 .ai-ai {
-  font-size: 64px; font-weight: 900;
-  color: #ffe040; letter-spacing: 5px;
-  /* くっきり: 細い黒縁 + 鮮明ゴールドグロー */
-  text-shadow:
-    -1px -1px 0 rgba(0,0,0,.95),
-     1px -1px 0 rgba(0,0,0,.95),
-    -1px  1px 0 rgba(0,0,0,.95),
-     1px  1px 0 rgba(0,0,0,.95),
-    0 0  8px rgba(255,240,0,1),
-    0 0 22px rgba(255,200,0,.95),
-    0 0 50px rgba(212,168,67,.80),
-    0 0 100px rgba(212,168,67,.45);
+  font-size: 68px; font-weight: 900;
+  /* グラデーション文字: 白金→純金 */
+  background: linear-gradient(170deg,
+    #fffbe0 0%, #ffe840 30%, #f5c500 60%, #ffe040 85%, #fff5a0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 5px;
+  /* drop-shadow で黒縁＋金光 */
+  filter:
+    drop-shadow(-2px -2px 0px rgba(0,0,0,.98))
+    drop-shadow( 2px -2px 0px rgba(0,0,0,.98))
+    drop-shadow(-2px  2px 0px rgba(0,0,0,.98))
+    drop-shadow( 2px  2px 0px rgba(0,0,0,.98))
+    drop-shadow(0 0  8px rgba(255,220,0,1))
+    drop-shadow(0 0 20px rgba(212,168,67,.85));
 }
 .ai-nyu {
-  font-size: 52px; font-weight: 900;
+  font-size: 55px; font-weight: 900;
   color: #ffffff; letter-spacing: 7px;
-  /* くっきり: 黒縁 + 金グロー */
+  /* 2px黒縁 + 金グロー */
   text-shadow:
-    -1px -1px 0 rgba(0,0,0,.95),
-     1px -1px 0 rgba(0,0,0,.95),
-    -1px  1px 0 rgba(0,0,0,.95),
-     1px  1px 0 rgba(0,0,0,.95),
-    0 0  8px rgba(255,240,120,.90),
-    0 0 22px rgba(212,168,67,.75),
-    0 0 50px rgba(212,168,67,.45);
+    -2px -2px 0 rgba(0,0,0,.98),
+     2px -2px 0 rgba(0,0,0,.98),
+    -2px  2px 0 rgba(0,0,0,.98),
+     2px  2px 0 rgba(0,0,0,.98),
+     0px  0px 0 rgba(0,0,0,.98),
+    0 0  9px rgba(255,240,120,1),
+    0 0 24px rgba(212,168,67,.85),
+    0 0 55px rgba(212,168,67,.50);
 }
 .ai-sub {
   display: block; margin-top: 9px;
@@ -219,75 +224,83 @@ body {
  240° 左上:  x= 69mm  y= 83.1mm → left=32.9%, top=28.0%
  300° 右上:  x=141mm  y= 83.1mm → left=67.1%, top=28.0%
 ══════════════════════════════════════════ */
+/* ══ 放射状バブル ══════════════════════════
+  直径 48mm（44→48、テキスト余白確保）
+  R=72mm / 60°等分
+════════════════════════════════════════════ */
 .bbl {
   position: absolute;
   transform: translate(-50%,-50%);
   z-index: 15;
-  width: 44mm; height: 44mm; border-radius: 50%;
-  /* 金箔風: 左上ハイライト + 深い黒 */
+  width: 48mm; height: 48mm; border-radius: 50%;
   background:
     radial-gradient(circle at 32% 22%,
-      rgba(255,230,100,.22) 0%,
-      rgba(90,68,16,.0)    28%,
-      transparent          40%),
+      rgba(255,230,100,.20) 0%,
+      transparent           38%),
     radial-gradient(circle at 50% 50%,
-      rgba(75,56,13,1)  0%,
-      rgba(38,28,5,1)   50%,
-      rgba(8,6,1,1)     100%);
-  /* 3重ボーダー: 外光 → メイン金縁 → 内縁 */
-  border: 3px solid rgba(255,224,80,.92);
-  outline: 1px solid rgba(212,168,67,.35);
+      rgba(70,52,12,1) 0%,
+      rgba(30,22,4,1)  55%,
+      rgba(6,5,1,1)    100%);
+  /* ② 外枠ゴールド発光を強化 */
+  border: 3.5px solid rgba(255,228,70,.98);
+  outline: 1.5px solid rgba(255,200,40,.45);
   box-shadow:
-    0 0   0px  2px   rgba(255,240,130,.60),  /* 最内光縁 */
-    0 0  18px  0px   rgba(255,220,60,1),      /* 近強グロー */
-    0 0  40px  0px   rgba(212,168,67,.92),    /* 中グロー */
-    0 0  85px  0px   rgba(212,168,67,.60),    /* 広グロー */
-    0 0  140px 0px   rgba(212,168,67,.32),    /* 超広 */
-    0 0  200px 0px   rgba(212,168,67,.14),    /* 環境光 */
-    inset 0 0  10px  rgba(255,230,100,.30),   /* 内面発光 */
-    inset 0 -8px 18px rgba(100,70,10,.60);    /* 下部影 */
+    0 0   0px   3px  rgba(255,245,120,.70),   /* 最内光縁 */
+    0 0  20px   0px  rgba(255,228,30,1),       /* 近強グロー */
+    0 0  48px   0px  rgba(212,168,67,.95),     /* 中グロー */
+    0 0  95px   0px  rgba(212,168,67,.65),     /* 広グロー */
+    0 0  160px  0px  rgba(212,168,67,.36),     /* 超広 */
+    0 0  240px  0px  rgba(212,168,67,.16),     /* 環境光 */
+    inset 0 0   12px rgba(255,230,80,.32),     /* 内面発光 */
+    inset 0 -8px 20px rgba(90,60,8,.65);      /* 下部影 */
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center; gap: 2px;
-  padding: 0 3mm;
+  text-align: center; gap: 3px;
+  padding: 0 4mm;
 }
 .bbl-ic {
-  font-size: 18px; line-height: 1;           /* アイコン縮小でテキストに余白 */
+  font-size: 13px; line-height: 1;            /* 装飾として最小化 */
   filter:
-    drop-shadow(0 0 6px rgba(255,230,60,1))
-    drop-shadow(0 0 16px rgba(212,168,67,.95))
-    drop-shadow(0 0 30px rgba(212,168,67,.55));
+    drop-shadow(0 0 5px rgba(255,230,60,1))
+    drop-shadow(0 0 12px rgba(212,168,67,.85));
 }
+/* ① メインテキスト：黒縁+金グローで背景から完全に浮かせる */
 .bbl-tx {
-  font-size: 38px; font-weight: 900;         /* 15.5→38px（2.5倍） */
-  color: #fff;
-  letter-spacing: 0px; line-height: 1.05;
+  font-size: 38px; font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -1px; line-height: 1.08;
   text-shadow:
-    0 0  5px rgba(255,240,120,.95),
-    0 0 14px rgba(212,168,67,.85),
-    0 0 28px rgba(212,168,67,.45);
+    /* 黒縁（輪郭をくっきり） */
+    -1.5px -1.5px 0 rgba(0,0,0,.92),
+     1.5px -1.5px 0 rgba(0,0,0,.92),
+    -1.5px  1.5px 0 rgba(0,0,0,.92),
+     1.5px  1.5px 0 rgba(0,0,0,.92),
+    /* ② ゴールドグロー */
+    0 0  7px rgba(255,240,100,1),
+    0 0 18px rgba(212,168,67,.90),
+    0 0 35px rgba(212,168,67,.50);
 }
 .bbl-st {
-  font-size: 8px; font-weight: 900;
-  color: var(--g2);
+  font-size: 8.5px; font-weight: 900;
+  color: #ffe680;
   letter-spacing: .1px; line-height: 1.45;
   text-shadow:
     0 0 4px rgba(255,230,80,1),
-    0 0 12px rgba(212,168,67,.80);
+    0 0 10px rgba(212,168,67,.75);
 }
 
-/* ① 上部2ノード強化 ─ 1.22倍スケール＋グロー増幅 */
+/* ① 上部2ノード：1.22倍スケール＋グロー増幅 */
 .bbl-top {
   transform: translate(-50%,-50%) scale(1.22);
   box-shadow:
-    0 0   0px  3px   rgba(255,245,140,.70),   /* 最内光縁 強 */
-    0 0  22px  0px   rgba(255,230,40,1),       /* 近強グロー 増 */
-    0 0  52px  0px   rgba(212,168,67,.98),
-    0 0  100px 0px   rgba(212,168,67,.72),
-    0 0  160px 0px   rgba(212,168,67,.42),
-    0 0  230px 0px   rgba(212,168,67,.18),
-    inset 0 0  14px  rgba(255,240,100,.38),
-    inset 0 -8px 18px rgba(100,70,10,.60);
+    0 0   0px   4px  rgba(255,248,140,.80),
+    0 0  24px   0px  rgba(255,235,30,1),
+    0 0  58px   0px  rgba(212,168,67,1),
+    0 0  110px  0px  rgba(212,168,67,.75),
+    0 0  175px  0px  rgba(212,168,67,.45),
+    0 0  250px  0px  rgba(212,168,67,.20),
+    inset 0 0   16px rgba(255,240,100,.40),
+    inset 0 -8px 20px rgba(90,60,8,.65);
 }
 
 /* ══ CTAボタン ═══════════════════════════ */
