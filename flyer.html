@@ -142,15 +142,35 @@ body {
   image-rendering: pixelated;
 }
 
-/* ══ QR下のシンプルテキスト ════════════════════ */
+/* ══ QR下「AI導入」大見出し ════════════════════ */
 .qr-sub {
-  position: absolute; left: 50%; top: 72%;
+  position: absolute; left: 50%; top: 71.5%;
   transform: translateX(-50%);
-  text-align: center; z-index: 10; white-space: nowrap;
+  text-align: center; z-index: 25; white-space: nowrap;
 }
+/* メインワード: QRと同格の存在感 */
 .qr-free {
-  font-size: 8.5px; font-weight: 700;
-  color: rgba(255,255,255,.36); letter-spacing: 3.5px;
+  font-size: 32px; font-weight: 900;
+  color: #fff;
+  letter-spacing: 6px;
+  line-height: 1;
+  /* ゴールド発光テキストシャドウ */
+  text-shadow:
+    0 0 10px rgba(214,164,81,1),
+    0 0 28px rgba(214,164,81,.85),
+    0 0 56px rgba(214,164,81,.55),
+    0 0 96px rgba(214,164,81,.28);
+}
+/* 「AI」部分をゴールドに */
+.qr-free .ai-gold {
+  color: var(--g);
+  font-size: 36px;
+}
+/* 下のサブコピー */
+.qr-free-sub {
+  display: block; margin-top: 4px;
+  font-size: 7.5px; font-weight: 700;
+  color: rgba(255,255,255,.38); letter-spacing: 4px;
 }
 
 /* ══ 放射状アイテム ════════════════════════════ */
@@ -331,9 +351,10 @@ body {
     </div>
   </div>
 
-  <!-- QR下テキスト（シンプル1行のみ） -->
+  <!-- QR下「AI導入」大見出し -->
   <div class="qr-sub">
-    <div class="qr-free">登録不要　｜　完全無料</div>
+    <div class="qr-free"><span class="ai-gold">AI</span>導入</div>
+    <span class="qr-free-sub">登録不要　｜　完全無料</span>
   </div>
 
   <!--
