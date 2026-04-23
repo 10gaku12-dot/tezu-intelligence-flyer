@@ -173,28 +173,31 @@ body {
   white-space: nowrap; line-height: 1;
 }
 .ai-text { display: block; font-size: 0; line-height: 1; }
+/* ② AI導入 ─ 1.4倍拡大・サブ主役として機能 */
 .ai-ai {
-  font-size: 46px; font-weight: 900;
-  color: var(--g2); letter-spacing: 4px;
+  font-size: 64px; font-weight: 900;          /* 46→64px (+1.39倍) */
+  color: var(--g2); letter-spacing: 5px;
   text-shadow:
-    0 0  6px rgba(255,250,180,1),
-    0 0 16px rgba(255,220,60,1),
-    0 0 36px rgba(212,168,67,.98),
-    0 0 80px rgba(212,168,67,.70),
-    0 0 150px rgba(212,168,67,.35);
+    0 0  5px rgba(255,255,200,1),
+    0 0 14px rgba(255,230,40,1),
+    0 0 30px rgba(255,200,30,1),
+    0 0 65px rgba(212,168,67,.95),
+    0 0 120px rgba(212,168,67,.65),
+    0 0 200px rgba(212,168,67,.30);
 }
 .ai-nyu {
-  font-size: 38px; font-weight: 900;
-  color: #fff; letter-spacing: 6px;
+  font-size: 52px; font-weight: 900;          /* 38→52px (+1.37倍) */
+  color: #fff; letter-spacing: 7px;
   text-shadow:
-    0 0  6px rgba(255,240,120,.90),
-    0 0 16px rgba(212,168,67,.75),
-    0 0 38px rgba(212,168,67,.45);
+    0 0  5px rgba(255,250,180,1),
+    0 0 14px rgba(255,220,60,.95),
+    0 0 32px rgba(212,168,67,.70),
+    0 0 70px rgba(212,168,67,.40);
 }
 .ai-sub {
-  display: block; margin-top: 7px;
-  font-size: 8px; font-weight: 700;
-  color: rgba(255,255,255,.45); letter-spacing: 4.5px;
+  display: block; margin-top: 9px;
+  font-size: 8.5px; font-weight: 700;
+  color: rgba(255,255,255,.50); letter-spacing: 4.5px;
 }
 
 /* ══ 放射状バブル（強化版） ══════════════
@@ -258,12 +261,26 @@ body {
     0 0 28px rgba(212,168,67,.45);
 }
 .bbl-st {
-  font-size: 9px; font-weight: 700;
+  font-size: 10px; font-weight: 900;          /* ④ 太く・大きく */
   color: var(--g2);
   letter-spacing: .15px; line-height: 1.5;
   text-shadow:
     0 0 4px rgba(255,230,80,1),
     0 0 12px rgba(212,168,67,.80);
+}
+
+/* ① 上部2ノード強化 ─ 1.22倍スケール＋グロー増幅 */
+.bbl-top {
+  transform: translate(-50%,-50%) scale(1.22);
+  box-shadow:
+    0 0   0px  3px   rgba(255,245,140,.70),   /* 最内光縁 強 */
+    0 0  22px  0px   rgba(255,230,40,1),       /* 近強グロー 増 */
+    0 0  52px  0px   rgba(212,168,67,.98),
+    0 0  100px 0px   rgba(212,168,67,.72),
+    0 0  160px 0px   rgba(212,168,67,.42),
+    0 0  230px 0px   rgba(212,168,67,.18),
+    inset 0 0  14px  rgba(255,240,100,.38),
+    inset 0 -8px 18px rgba(100,70,10,.60);
 }
 
 /* ══ CTAボタン ═══════════════════════════ */
@@ -483,15 +500,15 @@ body {
     <div class="bbl-st">自動返信で<br>即対応！</div>
   </div>
 
-  <!-- 240° 左上 ── 予約対応 -->
-  <div class="bbl" style="left:32.9%;top:28.0%">
+  <!-- 240° 左上 ── 予約対応（① 上部ノード強化） -->
+  <div class="bbl bbl-top" style="left:32.9%;top:28.0%">
     <div class="bbl-ic">📅</div>
     <div class="bbl-tx">予約対応</div>
     <div class="bbl-st">自動化で<br>時間を削減！</div>
   </div>
 
-  <!-- 300° 右上 ── 投稿の手間 -->
-  <div class="bbl" style="left:67.1%;top:28.0%">
+  <!-- 300° 右上 ── 投稿の手間（① 上部ノード強化） -->
+  <div class="bbl bbl-top" style="left:67.1%;top:28.0%">
     <div class="bbl-ic">✏️</div>
     <div class="bbl-tx">投稿の手間</div>
     <div class="bbl-st">SNS投稿を<br>自動化！</div>
@@ -500,7 +517,7 @@ body {
   <!-- CTA ボタン -->
   <div class="cta">
     <div class="cta-qr">📲</div>
-    <span>QRを読み取って今すぐ診断 →</span>
+    <span>30秒でムダ時間を診断 →</span>
   </div>
 
   <div class="foot">TEZU Intelligence Inc.</div>
